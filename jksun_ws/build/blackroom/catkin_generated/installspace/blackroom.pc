@@ -1,0 +1,8 @@
+prefix=/home/arclvm/jksun_ws/install
+
+Name: blackroom
+Description: Description of blackroom
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/arclvm/jksun_ws/install/lib 
+Requires: 

@@ -1,0 +1,12 @@
+<launch>
+  <arg name="world_name" default="blackroom"/>
+  <arg name="paused" value="true"/>
+
+  <env name="GAZEBO_MODEL_PATH" value="$(find blackroom)/models"/>
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find blackroom)/worlds/$(arg world_name).world" />
+    <!-- <arg name="debug" value="true"/> -->
+    <arg name="paused" value="$(arg paused)"/>
+    <!-- <arg name="gui" value="false"/> -->
+  </include>
+</launch>
