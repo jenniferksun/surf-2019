@@ -1,8 +1,8 @@
-# Install script for directory: /home/arclvm/jksun_ws/src/blackroom
+# Install script for directory: /home/arclvm/surf-2019/jksun_ws/src/blackroom
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/arclvm/jksun_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/arclvm/surf-2019/jksun_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -44,94 +44,103 @@ endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/arclvm/jksun_ws/install/_setup_util.py")
+   "/home/arclvm/surf-2019/jksun_ws/install/_setup_util.py")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/arclvm/jksun_ws/install" TYPE PROGRAM FILES "/home/arclvm/jksun_ws/build/blackroom/catkin_generated/installspace/_setup_util.py")
+file(INSTALL DESTINATION "/home/arclvm/surf-2019/jksun_ws/install" TYPE PROGRAM FILES "/home/arclvm/surf-2019/jksun_ws/build/blackroom/catkin_generated/installspace/_setup_util.py")
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/arclvm/jksun_ws/install/env.sh")
+   "/home/arclvm/surf-2019/jksun_ws/install/env.sh")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/arclvm/jksun_ws/install" TYPE PROGRAM FILES "/home/arclvm/jksun_ws/build/blackroom/catkin_generated/installspace/env.sh")
+file(INSTALL DESTINATION "/home/arclvm/surf-2019/jksun_ws/install" TYPE PROGRAM FILES "/home/arclvm/surf-2019/jksun_ws/build/blackroom/catkin_generated/installspace/env.sh")
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/arclvm/jksun_ws/install/setup.bash")
+   "/home/arclvm/surf-2019/jksun_ws/install/setup.bash;/home/arclvm/surf-2019/jksun_ws/install/local_setup.bash")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/arclvm/jksun_ws/install" TYPE FILE FILES "/home/arclvm/jksun_ws/build/blackroom/catkin_generated/installspace/setup.bash")
-endif()
-
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/arclvm/jksun_ws/install/setup.sh")
-  if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
-    message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
-  endif()
-  if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
-    message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
-  endif()
-file(INSTALL DESTINATION "/home/arclvm/jksun_ws/install" TYPE FILE FILES "/home/arclvm/jksun_ws/build/blackroom/catkin_generated/installspace/setup.sh")
-endif()
-
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/arclvm/jksun_ws/install/setup.zsh")
-  if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
-    message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
-  endif()
-  if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
-    message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
-  endif()
-file(INSTALL DESTINATION "/home/arclvm/jksun_ws/install" TYPE FILE FILES "/home/arclvm/jksun_ws/build/blackroom/catkin_generated/installspace/setup.zsh")
-endif()
-
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/arclvm/jksun_ws/install/.rosinstall")
-  if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
-    message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
-  endif()
-  if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
-    message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
-  endif()
-file(INSTALL DESTINATION "/home/arclvm/jksun_ws/install" TYPE FILE FILES "/home/arclvm/jksun_ws/build/blackroom/catkin_generated/installspace/.rosinstall")
-endif()
-
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/arclvm/jksun_ws/build/blackroom/catkin_generated/installspace/blackroom.pc")
-endif()
-
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/blackroom/cmake" TYPE FILE FILES
-    "/home/arclvm/jksun_ws/build/blackroom/catkin_generated/installspace/blackroomConfig.cmake"
-    "/home/arclvm/jksun_ws/build/blackroom/catkin_generated/installspace/blackroomConfig-version.cmake"
+file(INSTALL DESTINATION "/home/arclvm/surf-2019/jksun_ws/install" TYPE FILE FILES
+    "/home/arclvm/surf-2019/jksun_ws/build/blackroom/catkin_generated/installspace/setup.bash"
+    "/home/arclvm/surf-2019/jksun_ws/build/blackroom/catkin_generated/installspace/local_setup.bash"
     )
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/blackroom" TYPE FILE FILES "/home/arclvm/jksun_ws/src/blackroom/package.xml")
+  list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
+   "/home/arclvm/surf-2019/jksun_ws/install/setup.sh;/home/arclvm/surf-2019/jksun_ws/install/local_setup.sh")
+  if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+  if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+file(INSTALL DESTINATION "/home/arclvm/surf-2019/jksun_ws/install" TYPE FILE FILES
+    "/home/arclvm/surf-2019/jksun_ws/build/blackroom/catkin_generated/installspace/setup.sh"
+    "/home/arclvm/surf-2019/jksun_ws/build/blackroom/catkin_generated/installspace/local_setup.sh"
+    )
+endif()
+
+if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+  list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
+   "/home/arclvm/surf-2019/jksun_ws/install/setup.zsh;/home/arclvm/surf-2019/jksun_ws/install/local_setup.zsh")
+  if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+  if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+file(INSTALL DESTINATION "/home/arclvm/surf-2019/jksun_ws/install" TYPE FILE FILES
+    "/home/arclvm/surf-2019/jksun_ws/build/blackroom/catkin_generated/installspace/setup.zsh"
+    "/home/arclvm/surf-2019/jksun_ws/build/blackroom/catkin_generated/installspace/local_setup.zsh"
+    )
+endif()
+
+if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+  list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
+   "/home/arclvm/surf-2019/jksun_ws/install/.rosinstall")
+  if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+  if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+file(INSTALL DESTINATION "/home/arclvm/surf-2019/jksun_ws/install" TYPE FILE FILES "/home/arclvm/surf-2019/jksun_ws/build/blackroom/catkin_generated/installspace/.rosinstall")
+endif()
+
+if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/arclvm/surf-2019/jksun_ws/build/blackroom/catkin_generated/installspace/blackroom.pc")
+endif()
+
+if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/blackroom/cmake" TYPE FILE FILES
+    "/home/arclvm/surf-2019/jksun_ws/build/blackroom/catkin_generated/installspace/blackroomConfig.cmake"
+    "/home/arclvm/surf-2019/jksun_ws/build/blackroom/catkin_generated/installspace/blackroomConfig-version.cmake"
+    )
+endif()
+
+if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/blackroom" TYPE FILE FILES "/home/arclvm/surf-2019/jksun_ws/src/blackroom/package.xml")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/arclvm/jksun_ws/build/blackroom/gtest/cmake_install.cmake")
+  include("/home/arclvm/surf-2019/jksun_ws/build/blackroom/gtest/cmake_install.cmake")
 
 endif()
 
@@ -143,5 +152,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/arclvm/jksun_ws/build/blackroom/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/arclvm/surf-2019/jksun_ws/build/blackroom/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

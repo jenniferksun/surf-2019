@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/arclvm/jksun_ws/src/blackroom
+CMAKE_SOURCE_DIR = /home/arclvm/surf-2019/jksun_ws/src/blackroom
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/arclvm/jksun_ws/build/blackroom
+CMAKE_BINARY_DIR = /home/arclvm/surf-2019/jksun_ws/build/blackroom
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -135,9 +135,9 @@ test/fast: test
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/arclvm/jksun_ws/build/blackroom/CMakeFiles /home/arclvm/jksun_ws/build/blackroom/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/arclvm/surf-2019/jksun_ws/build/blackroom/CMakeFiles /home/arclvm/surf-2019/jksun_ws/build/blackroom/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/arclvm/jksun_ws/build/blackroom/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/arclvm/surf-2019/jksun_ws/build/blackroom/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
