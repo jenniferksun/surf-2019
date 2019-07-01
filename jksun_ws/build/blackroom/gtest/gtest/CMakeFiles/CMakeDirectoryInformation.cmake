@@ -3,7 +3,7 @@
 
 # Relative path conversion top directories.
 set(CMAKE_RELATIVE_PATH_TOP_SOURCE "/usr/src/gtest")
-set(CMAKE_RELATIVE_PATH_TOP_BINARY "/home/arclvm/surf-2019/jksun_ws/build/blackroom")
+set(CMAKE_RELATIVE_PATH_TOP_BINARY "/home/arclvm/jksun_ws/build/blackroom")
 
 # Force unix paths in dependencies.
 set(CMAKE_FORCE_UNIX_PATHS 1)

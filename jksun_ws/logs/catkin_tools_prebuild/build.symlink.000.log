@@ -1,6 +1,10 @@
+Symlinking /home/arclvm/jksun_ws/devel/./cmake.lock
+Symlinking /home/arclvm/jksun_ws/devel/./local_setup.zsh
+Symlinking /home/arclvm/jksun_ws/devel/./local_setup.sh
 Symlinking /home/arclvm/jksun_ws/devel/./env.sh
 Symlinking /home/arclvm/jksun_ws/devel/./setup.zsh
 Symlinking /home/arclvm/jksun_ws/devel/./setup.bash
+Symlinking /home/arclvm/jksun_ws/devel/./local_setup.bash
 Symlinking /home/arclvm/jksun_ws/devel/./_setup_util.py
 Symlinking /home/arclvm/jksun_ws/devel/./setup.sh
 Symlinking /home/arclvm/jksun_ws/devel/lib/pkgconfig/catkin_tools_prebuild.pc
