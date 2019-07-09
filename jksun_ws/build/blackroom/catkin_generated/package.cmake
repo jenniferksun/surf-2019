@@ -1,6 +1,6 @@
 set(_CATKIN_CURRENT_PACKAGE "blackroom")
 set(blackroom_VERSION "0.0.0")
-set(blackroom_MAINTAINER "arclvm <arclvm@todo.todo>")
+set(blackroom_MAINTAINER "jksun <jksun@caltech.edu>")
 set(blackroom_PACKAGE_FORMAT "2")
 set(blackroom_BUILD_DEPENDS )
 set(blackroom_BUILD_EXPORT_DEPENDS )

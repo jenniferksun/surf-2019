@@ -11,7 +11,7 @@
 
 # since this file is sourced either use the provided _CATKIN_SETUP_DIR
 # or fall back to the destination set at configure time
-: ${_CATKIN_SETUP_DIR:=/home/arclvm/surf-2019/jksun_ws/devel/.private/blackroom}
+: ${_CATKIN_SETUP_DIR:=/home/jksun/surf-2019/jksun_ws/devel/.private/blackroom}
 _SETUP_UTIL="$_CATKIN_SETUP_DIR/_setup_util.py"
 unset _CATKIN_SETUP_DIR
 

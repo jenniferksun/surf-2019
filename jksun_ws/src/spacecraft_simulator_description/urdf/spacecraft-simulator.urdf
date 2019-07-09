@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<robot name="spacecraft-simulator">
+  <link name="base_footprint">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="base_link_anchor" type="fixed">
+    <origin xyz="0 0 0.25" rpy="0 0 0"/>
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+  </joint>
+
+  <link name="base_link">
+    <inertial>
+      <!-- should spawn 0.25 m off the ground to account for blackroom floor thickness. -->
+      <mass value="15"/>
+      <origin xyz="0 0 -0.25"/>
+      <inertia ixx="27.60" iyy="3.36" izz="28.06"
+               ixy="-5.21" ixz="0.86" iyz="-4.00"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <!-- <box size="0.6 0.3 0.3"/> -->
+        <mesh filename="package://spacecraft_simulator_description/meshes/spacecraft-simulator-simple.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0"/>
+      <geometry>
+        <!-- <box size="0.46 0.46 0.76"/> -->
+        <mesh filename="package://spacecraft_simulator_description/meshes/spacecraft-simulator-simple.dae"/>
+      </geometry>
+      <surface>
+        <contact>
+          <ode>
+            <min_depth>0.0</min_depth>
+            <max_vel>0.5</max_vel>
+          </ode>
+        </contact>
+        <friction>
+          <ode>
+            <mu>0.0</mu>
+            <mu2>0.0</mu2>
+          </ode>
+        </friction>
+      </surface>
+    </collision>
+  </link>
+
+  <gazebo>
+    <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <odometryRate>20.0</odometryRate>
+      <robotBaseFrame>base_footprint</robotBaseFrame>
+    </plugin>
+  </gazebo>
+</robot>

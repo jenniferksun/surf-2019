@@ -1,8 +1,0 @@
-prefix=/home/arclvm/jksun_ws/devel/.private/spacecraft-simulator
-
-Name: spacecraft-simulator
-Description: Description of spacecraft-simulator
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/arclvm/jksun_ws/devel/.private/spacecraft-simulator/lib 
-Requires: 

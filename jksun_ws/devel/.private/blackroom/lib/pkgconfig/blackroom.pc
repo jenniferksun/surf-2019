@@ -1,8 +1,8 @@
-prefix=/home/arclvm/surf-2019/jksun_ws/devel/.private/blackroom
+prefix=/home/jksun/surf-2019/jksun_ws/devel/.private/blackroom
 
 Name: blackroom
 Description: Description of blackroom
 Version: 0.0.0
 Cflags: 
-Libs: -L/home/arclvm/surf-2019/jksun_ws/devel/.private/blackroom/lib 
+Libs: -L/home/jksun/surf-2019/jksun_ws/devel/.private/blackroom/lib 
 Requires: 

@@ -1,0 +1,23 @@
+<launch>
+  <!-- <arg name="world_name" default="blackroom"/>
+  <arg name="paused" value="true"/> -->
+
+  <!-- Load the spacecraft simulator URDF model into the parameter server -->
+  <param name="robot_description" textfile="$(find spacecraft_simulator_description)/urdf/spacecraft-simulator.urdf" />
+
+  <!-- Start Gazebo with an empty world -->
+  <env name="GAZEBO_MODEL_PATH" value="$(find blackroom)/models"/>
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find blackroom)/worlds/blackroom.world"/>
+    <arg name="paused" value="true"/>
+    <!-- more default parameters can be changed here -->
+  </include>
+    <!-- <arg name="world_name" value="$(find blackroom)/worlds/$(arg world_name).world" />
+    <arg name="paused" value="$(arg paused)"/>
+  </include> -->
+
+  <!-- Spawn a spacecraft simulator in Gazebo, taking the description from the
+  parameter server -->
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model"
+        args="-param robot_description -urdf -model spacecraft-simulator" />
+</launch>

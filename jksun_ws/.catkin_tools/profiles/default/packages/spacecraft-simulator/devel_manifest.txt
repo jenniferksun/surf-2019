@@ -1,5 +1,0 @@
-spacecraft-simulator
-/home/arclvm/jksun_ws/devel/.private/spacecraft-simulator/cmake.lock /home/arclvm/jksun_ws/devel/./cmake.lock
-/home/arclvm/jksun_ws/devel/.private/spacecraft-simulator/lib/pkgconfig/spacecraft-simulator.pc /home/arclvm/jksun_ws/devel/lib/pkgconfig/spacecraft-simulator.pc
-/home/arclvm/jksun_ws/devel/.private/spacecraft-simulator/share/spacecraft-simulator/cmake/spacecraft-simulatorConfig-version.cmake /home/arclvm/jksun_ws/devel/share/spacecraft-simulator/cmake/spacecraft-simulatorConfig-version.cmake
-/home/arclvm/jksun_ws/devel/.private/spacecraft-simulator/share/spacecraft-simulator/cmake/spacecraft-simulatorConfig.cmake /home/arclvm/jksun_ws/devel/share/spacecraft-simulator/cmake/spacecraft-simulatorConfig.cmake
