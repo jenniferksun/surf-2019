@@ -21,6 +21,7 @@ g_last_send_time = None
 g_vel_scales = [0.1, 0.1, 0.1] # default to very slow
 g_vel_ramps = [1, 1, 1] # units: meters per second^2
 
+
 def ramped_vel(v_prev, v_target, t_prev, t_now, ramp_rate):
     # compute maximum velocity step
     step = ramp_rate * (t_now - t_prev).to_sec()
@@ -30,6 +31,7 @@ def ramped_vel(v_prev, v_target, t_prev, t_now, ramp_rate):
         return v_target
     else:
         return v_prev + sign * step # take a step toward the target
+
 
 def ramped_twist(prev, target, t_prev, t_now, ramps):
     tw = Twist()
@@ -41,6 +43,7 @@ def ramped_twist(prev, target, t_prev, t_now, ramps):
                                 t_now, ramps[2])
     return tw
 
+
 def send_twist():
     global g_last_twist_send_time, g_target_twist, g_last_twist,\
             g_vel_scales, g_vel_ramps, g_twist_pub
@@ -48,11 +51,13 @@ def send_twist():
     g_last_twist = ramped_twist(g_last_twist, g_target_twist,
                             g_last_twist_send_time, t_now, g_vel_ramps)
     g_last_twist_send_time = t_now
-    print g_last_twist
+    # print g_last_twist
     g_twist_pub.publish(g_last_twist)
+
 
 def keys_cb(msg):
     global g_target_twist, g_last_twist, g_vel_scales
+    # Handles situation when there are no inputs or lack of
     if len(msg.data) == 0 or not key_mapping.has_key(msg.data[0]):
         return # unknown key
     vels = key_mapping[msg.data[0]]
@@ -60,13 +65,6 @@ def keys_cb(msg):
     g_target_twist.linear.y = vels[1] * g_vel_scales[1]
     g_target_twist.angular.z = vels[2] * g_vel_scales[2]
 
-
-# def fetch_param(name, default):
-#     if rospy.has_param(name):
-#         return rospy.get_param(name)
-#     else:
-#         print "parameter [%s] not defined. Defaulting to %.3f" % (name, default)
-#         return default
 
 if __name__ == '__main__':
     rospy.init_node('keys_to_twist')

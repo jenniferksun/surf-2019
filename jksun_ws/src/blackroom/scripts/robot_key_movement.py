@@ -19,6 +19,7 @@ def keys_cb(msg, twist_pub):
     t.linear.x = vels[0]
     t.linear.y = vels[1]
     t.angular.z = vels[2]
+    print t
     twist_pub.publish(t)
 
 if __name__ == '__main__':

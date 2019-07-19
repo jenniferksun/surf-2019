@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<robot name="spacecraft-simulator">
+<robot name="spacecraft_simulator">
+  <!-- Actuator representing the base of the spacecraft model -->
   <link name="base_footprint">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -9,12 +10,15 @@
     </visual>
   </link>
 
+  <!-- Joint linking base_footprint with the base_link -->
   <joint name="base_link_anchor" type="fixed">
     <origin xyz="0 0 0.25" rpy="0 0 0"/>
     <parent link="base_footprint"/>
     <child link="base_link"/>
+    <dynamics friction="0.0"/>
   </joint>
 
+  <!-- Represents the spacecraft simulator model -->
   <link name="base_link">
     <inertial>
       <!-- should spawn 0.25 m off the ground to account for blackroom floor thickness. -->
@@ -53,12 +57,31 @@
   </link>
 
   <gazebo>
-    <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
+    <!-- ros_control plugin for parsing the transmission tags and loading the
+    appropriate hardware interfaces and controller manager -->
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/spacecraft_simulator</robotNamespace>
+    </plugin>
+
+    <!-- <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
       <commandTopic>cmd_vel</commandTopic>
       <odometryTopic>odom</odometryTopic>
       <odometryFrame>odom</odometryFrame>
       <odometryRate>20.0</odometryRate>
       <robotBaseFrame>base_footprint</robotBaseFrame>
-    </plugin>
+    </plugin> -->
   </gazebo>
+
+
+  <!-- Links actuator (what controls movement) and joint (what is being moved)
+  to use ros_control with the spacecraft model -->
+  <transmission name="sc_transmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="base_link_anchor">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="base_footprint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </actuator>
+  </transmission>
 </robot>

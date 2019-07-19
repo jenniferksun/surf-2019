@@ -1,15 +1,16 @@
 <launch>
-  <!-- <arg name="world_name" default="blackroom"/>
-  <arg name="paused" value="true"/> -->
+  <arg name="world_name" default="$(find blackroom)/worlds/blackroom.world"/>
+  <arg name="paused" value="true"/>
+  <arg name="csv" default="vel.csv"/>
 
   <!-- Load the spacecraft simulator URDF model into the parameter server -->
-  <param name="robot_description" textfile="$(find spacecraft_simulator_description)/urdf/spacecraft-simulator.urdf" />
+  <param name="robot_description" textfile="$(find spacecraft_simulator_description)/urdf/spacecraft_simulator.urdf" />
 
   <!-- Start Gazebo with an empty world -->
   <env name="GAZEBO_MODEL_PATH" value="$(find blackroom)/models"/>
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find blackroom)/worlds/blackroom.world"/>
-    <arg name="paused" value="true"/>
+    <arg name="world_name" value="$(arg world_name)"/>
+    <arg name="paused" value="$(arg paused)"/>
     <!-- more default parameters can be changed here -->
   </include>
     <!-- <arg name="world_name" value="$(find blackroom)/worlds/$(arg world_name).world" />
@@ -18,6 +19,23 @@
 
   <!-- Spawn a spacecraft simulator in Gazebo, taking the description from the
   parameter server -->
-  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model"
-        args="-param robot_description -urdf -model spacecraft-simulator" />
+  <node name="spawn_urdf1" pkg="gazebo_ros" type="spawn_model"
+        args="-param robot_description -urdf -x 1.0 -y 2.5 -z 0.0
+              -model sc1"/>
+
+  <!-- <node name="spawn_urdf2" pkg="gazebo_ros" type="spawn_model"
+        args="-param robot_description -urdf -x -2.0 -y -0.5 -z 0.0
+              -model sc2"/>
+
+  <node name="spawn_urdf3" pkg="gazebo_ros" type="spawn_model"
+        args="-param robot_description -urdf -x 0.5 -y -1.0 -z 0.0
+              -model sc3"/> -->
+
+  <!-- Start keyboard driver node for recording keyboard inputs -->
+  <!-- <node pkg="blackroom" type="robot_key_control.py" name="robot_key_control" output="screen"/> -->
+
+  <!-- Start node to control robot with ramping motion -->
+  <!-- <node pkg="blackroom" type="robot_movement.py" name="robot_movement" args="$(arg csv)" output="screen"/> -->
+  <!-- <node pkg="blackroom" type="robot_key_movement.py" name="robot_key_movement" args="$(arg csv)" output="screen"/> -->
+  <!-- <node pkg="blackroom" type="robot_key_movement_ramps.py" name="robot_key_movement_ramps" output="screen"/> -->
 </launch>
