@@ -60,7 +60,9 @@ def send_twist():
 
 if __name__ == '__main__':
     twist_pub = rospy.Publisher('/' + sys.argv[1] + '/cmd_vel', Twist, queue_size=1)
-    rospy.init_node('keys_to_twist', log_level=rospy.INFO)
+    rospy.init_node(sys.argv[1] + '_ramped_movement', log_level=rospy.INFO)
+    # twist_pub = rospy.Publisher('/sc1/cmd_vel', Twist, queue_size=1)
+    # rospy.init_node('ramped_movement', log_level=rospy.INFO)
     last_twist_send_time = rospy.Time.now()
     target_twist = Twist() # initializes to zero
     last_twist = Twist()

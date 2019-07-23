@@ -3,8 +3,10 @@
   <arg name="paused" value="true"/>
   <arg name="csv" default="vel.csv"/>
 
-  <!-- Load the spacecraft simulator URDF model into the parameter server -->
-  <param name="robot_description" textfile="$(find spacecraft_simulator_description)/urdf/spacecraft_simulator.urdf" />
+  <!-- Load multiple spacecraft simulator URDF models into the parameter server -->
+  <param name="sc1_description" textfile="$(find spacecraft_simulator_description)/urdf/sc1.urdf"/>
+  <param name="sc2_description" textfile="$(find spacecraft_simulator_description)/urdf/sc2.urdf"/>
+  <param name="sc3_description" textfile="$(find spacecraft_simulator_description)/urdf/sc3.urdf"/>
 
   <!-- Start Gazebo with an empty world -->
   <env name="GAZEBO_MODEL_PATH" value="$(find blackroom)/models"/>
@@ -20,16 +22,16 @@
   <!-- Spawn a spacecraft simulator in Gazebo, taking the description from the
   parameter server -->
   <node name="spawn_urdf1" pkg="gazebo_ros" type="spawn_model"
-        args="-param robot_description -urdf -x 1.0 -y 2.5 -z 0.25
+        args="-param sc1_description -urdf -x 1.0 -y 2.5 -z 0.25
               -model sc1"/>
 
-  <!-- <node name="spawn_urdf2" pkg="gazebo_ros" type="spawn_model"
-        args="-param robot_description -urdf -x -2.0 -y -0.5 -z 0.0
+  <node name="spawn_urdf2" pkg="gazebo_ros" type="spawn_model"
+        args="-param sc2_description -urdf -x -2.0 -y -0.5 -z 0.25
               -model sc2"/>
 
   <node name="spawn_urdf3" pkg="gazebo_ros" type="spawn_model"
-        args="-param robot_description -urdf -x 0.5 -y -1.0 -z 0.0
-              -model sc3"/> -->
+        args="-param sc3_description -urdf -x 0.5 -y -1.0 -z 0.25
+              -model sc3"/>
 
   <!-- Start keyboard driver node for recording keyboard inputs -->
   <!-- <node pkg="blackroom" type="robot_key_control.py" name="robot_key_control" output="screen"/> -->

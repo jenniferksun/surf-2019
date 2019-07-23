@@ -1,0 +1,18 @@
+<!-- Launch file used to visualize the urdf of a spacecraft simulator in RViz
+     Use roslaunch spacecraft_simulator_description urdf_visualize.launch -->
+
+<launch>
+  <arg name="model" default="$(find spacecraft_simulator_description)/urdf/spacecraft_simulator.urdf"/>
+  <arg name="gui" default="true" />
+  <arg name="rvizconfig" default="$(find urdf_tutorial)/rviz/urdf.rviz" />
+
+  <param name="robot_description" command="cat $(arg model)"/>
+  <param name="use_gui" value="$(arg gui)"/>
+
+  <!-- Model joint values -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+
+  <!-- Show in RViz -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+</launch>
