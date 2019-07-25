@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/jksun/surf-2019/jksun_ws/devel/.private/gazebo_plugins/setup.sh

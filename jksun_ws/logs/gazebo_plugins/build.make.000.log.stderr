@@ -1,0 +1,10 @@
+[01m[K/home/jksun/surf-2019/jksun_ws/src/gazebo_plugins/src/force_based_mover.cpp:5:9:[m[K [01;31m[Kerror: [m[Kredefinition of ‘[01m[Kclass gazebo::ForceBasedMover[m[K’
+   class [01;31m[KForceBasedMover[m[K : public ModelPlugin {
+         [01;31m[K^~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/jksun/surf-2019/jksun_ws/src/gazebo_plugins/src/force_based_mover.cpp:1:0[m[K:
+[01m[K/home/jksun/surf-2019/jksun_ws/src/gazebo_plugins/src/force_based_mover.h:5:9:[m[K [01;36m[Knote: [m[Kprevious definition of ‘[01m[Kclass gazebo::ForceBasedMover[m[K’
+   class [01;36m[KForceBasedMover[m[K : public ModelPlugin {
+         [01;36m[K^~~~~~~~~~~~~~~[m[K
+make[2]: *** [CMakeFiles/gazebo_plugins.dir/src/force_based_mover.cpp.o] Error 1
+make[1]: *** [CMakeFiles/gazebo_plugins.dir/all] Error 2
+make: *** [all] Error 2

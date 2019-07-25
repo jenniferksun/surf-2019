@@ -19,9 +19,9 @@
 
   <!-- Spawn a spacecraft simulator in Gazebo, taking the description from the
   parameter server -->
-  <node name="spawn_urdf1" pkg="gazebo_ros" type="spawn_model"
+  <node name="sc" pkg="gazebo_ros" type="spawn_model"
         args="-param robot_description -urdf -x 1.0 -y 2.5 -z 0.25
-              -model sc1"/>
+              -model sc"/>
 
   <!-- <node name="spawn_urdf2" pkg="gazebo_ros" type="spawn_model"
         args="-param robot_description -urdf -x -2.0 -y -0.5 -z 0.0

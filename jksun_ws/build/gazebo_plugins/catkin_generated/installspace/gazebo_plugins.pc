@@ -1,0 +1,8 @@
+prefix=/home/jksun/surf-2019/jksun_ws/install
+
+Name: gazebo_plugins
+Description: Description of gazebo_plugins
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/jksun/surf-2019/jksun_ws/install/lib 
+Requires: roscpp gazebo_ros

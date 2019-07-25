@@ -1,0 +1,14 @@
+In file included from [01m[K/home/jksun/surf-2019/jksun_ws/src/gazebo_plugins/src/spacecraft_thruster_force.cpp:8:0[m[K:
+[01m[K/home/jksun/surf-2019/jksun_ws/src/gazebo_plugins/include/gazebo_plugins/spacecraft_thruster_force.h:8:0:[m[K [01;31m[Kerror: [m[Kunterminated #ifndef
+ #ifndef GAZEBO_ROS_FORCE_HH
+ 
+[01m[K/home/jksun/surf-2019/jksun_ws/src/gazebo_plugins/src/spacecraft_thruster_force.cpp:12:9:[m[K [01;31m[Kerror: [m[Kredefinition of ‘[01m[Kclass gazebo::ForceBasedMover[m[K’
+   class [01;31m[KForceBasedMover[m[K : public ModelPlugin {
+         [01;31m[K^~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/jksun/surf-2019/jksun_ws/src/gazebo_plugins/src/spacecraft_thruster_force.cpp:8:0[m[K:
+[01m[K/home/jksun/surf-2019/jksun_ws/src/gazebo_plugins/include/gazebo_plugins/spacecraft_thruster_force.h:36:7:[m[K [01;36m[Knote: [m[Kprevious definition of ‘[01m[Kclass gazebo::ForceBasedMover[m[K’
+ class [01;36m[KForceBasedMover[m[K : public ModelPlugin {
+       [01;36m[K^~~~~~~~~~~~~~~[m[K
+make[2]: *** [CMakeFiles/gazebo_plugins.dir/src/spacecraft_thruster_force.cpp.o] Error 1
+make[1]: *** [CMakeFiles/gazebo_plugins.dir/all] Error 2
+make: *** [all] Error 2

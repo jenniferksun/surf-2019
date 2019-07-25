@@ -1,0 +1,4 @@
+Symlinking /home/jksun/surf-2019/jksun_ws/devel/lib/libgazebo_plugins.so
+Symlinking /home/jksun/surf-2019/jksun_ws/devel/lib/pkgconfig/gazebo_plugins.pc
+Symlinking /home/jksun/surf-2019/jksun_ws/devel/share/gazebo_plugins/cmake/gazebo_pluginsConfig-version.cmake
+Symlinking /home/jksun/surf-2019/jksun_ws/devel/share/gazebo_plugins/cmake/gazebo_pluginsConfig.cmake

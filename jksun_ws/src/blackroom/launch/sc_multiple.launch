@@ -26,11 +26,11 @@
               -model sc1"/>
 
   <node name="spawn_urdf2" pkg="gazebo_ros" type="spawn_model"
-        args="-param sc2_description -urdf -x -2.0 -y -0.5 -z 0.25
+        args="-param sc2_description -urdf -x -0.75 -y -0.5 -z 0.25
               -model sc2"/>
 
   <node name="spawn_urdf3" pkg="gazebo_ros" type="spawn_model"
-        args="-param sc3_description -urdf -x 0.5 -y -1.0 -z 0.25
+        args="-param sc3_description -urdf -x 1.5 -y -1.0 -z 0.25
               -model sc3"/>
 
   <!-- Start keyboard driver node for recording keyboard inputs -->

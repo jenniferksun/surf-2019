@@ -72,6 +72,11 @@
       <odometryRate>20.0</odometryRate>
       <robotBaseFrame>base_link</robotBaseFrame>
     </plugin>
+
+    <plugin name="force_controller" filename="libgazebo_ros_force.so">
+      <bodyName>spacecraft_simulator</bodyName>
+      <topicName>sc1/ros_force</topicName>
+    </plugin>
   </gazebo>
 
 
