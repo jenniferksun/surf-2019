@@ -10,11 +10,6 @@ import sys
 from std_msgs.msg import String
 from geometry_msgs.msg import Wrench
 
-key_mapping = { 'w': [ 1, 0, 0], 'x': [-1, 0, 0],
-                'a': [0, 1, 0], 'd': [0, -1, 0],
-                'q': [0, 0, 1], 'e': [0, 0, -1],
-                's': [ 0, 0, 0] }
-
 def commands():
     wrench_pub = rospy.Publisher('ros_force', Wrench, queue_size=1)
     rospy.init_node('force_movement', log_level=rospy.INFO)

@@ -1,7 +1,9 @@
 /*
- * Header file for gazebo plugin that applys forces using Wrench messages at 8
- * specific thruster locations on the spacecraft relative to the center of mass
- * of the air bearing (ball joint between pedestal and head of spacecraft).
+ * Header file for gazebo plugin that applys forces using a Thrusters8 message
+ * to represent forces applied at 8 specific thruster locations on the
+ * spacecraft relative to the center of mass of the air bearing (ball joint
+ * between pedestal and head of spacecraft). This plugin was inspired by the
+ * Gazebo ROS force plugin found in the gazebo_ros_pkgs package.
  *
  */
 
@@ -13,7 +15,6 @@
 // Custom callback queue
 #include <ros/callback_queue.h>
 #include <ros/subscribe_options.h>
-#include <geometry_msgs/Wrench.h>
 
 #include <ros/ros.h>
 #include <boost/thread.hpp>
@@ -23,14 +24,9 @@
 #include <gazebo/transport/TransportTypes.hh>
 #include <gazebo/common/Plugin.hh>
 
-#include <gazebo/common/Plugin.hh>
-#include <ros/ros.h>
-
-// Wrench message which contains Vector3D forces and torques
-#include <geometry_msgs/Wrench.h>
-
-#include <gazebo/physics/physics.hh>
-#include <gazebo/common/Events.hh>
+#include <std_msgs/Float32.h>
+// Thrusters8 message which contains Vector3D forces and torques
+#include <custom_msgs/Thrusters8.h>
 
 namespace gazebo {
 class SpacecraftThrusterForce : public ModelPlugin {
@@ -50,6 +46,7 @@ class SpacecraftThrusterForce : public ModelPlugin {
 
   // ROS Wrench topic name inputs
   private: std::string topic_name_;
+
   // Link this plugin is attached to, and will exert forces on
   private: std::string link_name_;
 
@@ -62,44 +59,50 @@ class SpacecraftThrusterForce : public ModelPlugin {
   // For setting the ROS name space
   private: std::string robot_namespace_;
 
-
-  // Keeps track of wrench messages exerted at each thruster on the spacecraft
+  // Keeps track of Thrusters8 messages exerted on the spacecraft
   /* For readability: thruster locations on the spacecraft will be in the same
    * reference of the Gazebo world where the positive x direction is towards
    * the rightmost wall and the positive y direction is towards the back wall.
    *
+   * Thrusters8 msg:
+   *  0) FXpMZp
+   *  1) FXpMZm
+   *  2) FXmMZp
+   *  3) FXmMZm
+   *  4) FYpMZp
+   *  5) FYpMZm
+   *  6) FYmMZp
+   *  7) FYmMZm
+   *
+   *
    * Thruster locations on spacecraft:
    *
-   *            a) FYmMZp   b) FYmMZm
-   *               ---------------
-   *    h) FXpMZm  |             |  c) FXmMZp
-   *               |             |
-   *               |             |
-   *    g) FXpMZp  |             |  d) FXmMZm
-   *               ---------------
-   *            f) FYpMZm   e) FYpMZp
+   *             6a) FYmMZp   7b) FYmMZm
+   *                ---------------
+   *    1h) FXpMZm  |             |  2c) FXmMZp            ^ y
+   *                |             |                       |
+   *                |             |                       ----> x
+   *    0g) FXpMZp  |             |  3d) FXmMZm
+   *                ---------------
+   *             5f) FYpMZm   4e) FYpMZp
    *
    */
-  private: geometry_msgs::Wrench FYmMZp_;
-  private: geometry_msgs::Wrench FYmMZm_;
-  private: geometry_msgs::Wrench FXmMZp_;
-  private: geometry_msgs::Wrench FXmMZm_;
-  private: geometry_msgs::Wrench FYpMZp_;
-  private: geometry_msgs::Wrench FYpMZm_;
-  private: geometry_msgs::Wrench FXpMZp_;
-  private: geometry_msgs::Wrench FXpMZm_;
+
+  private: custom_msgs::Thrusters8 thrusters_msg_;
+  // private: geometry_msgs::Wrench wrench_msg_;
+
 
   /* Keeps track of the relative position of each thruster with respect to the
-   * bottom of the ball joint.
+   * bottom of the air bearing.
    */
-  private: const ignition::math::Vector3d pos_a();
-  private: const ignition::math::Vector3d pos_b();
-  private: const ignition::math::Vector3d pos_c();
-  private: const ignition::math::Vector3d pos_d();
-  private: const ignition::math::Vector3d pos_e();
-  private: const ignition::math::Vector3d pos_f();
-  private: const ignition::math::Vector3d pos_g();
-  private: const ignition::math::Vector3d pos_h();
+  private: ignition::math::Vector3d pos_a;
+  private: ignition::math::Vector3d pos_b;
+  private: ignition::math::Vector3d pos_c;
+  private: ignition::math::Vector3d pos_d;
+  private: ignition::math::Vector3d pos_e;
+  private: ignition::math::Vector3d pos_f;
+  private: ignition::math::Vector3d pos_g;
+  private: ignition::math::Vector3d pos_h;
 
   // Constructor
   public: SpacecraftThrusterForce();
@@ -113,30 +116,19 @@ class SpacecraftThrusterForce : public ModelPlugin {
   // Update the controller
   protected: virtual void UpdateChild();
 
-  // Call back when a Wrench message is published
+  // Call back when a Thrusters8 message is published
   // Incoming ROS message representing the new force to exert
-  private: void UpdateObjectForce(const geometry_msgs::Wrench::ConstPtr& _msg);
+  private: void UpdateObjectForce(const custom_msgs::Thrusters8::ConstPtr& _msg);
+  // private: void UpdateObjectForce(const geometry_msgs::Wrench::ConstPtr& _msg);
 
   // Custom callback queue thread function
   private: void QueueThread();
-
-
 
   // Pointer to the update event connection
   private: event::ConnectionPtr update_connection_;
 
   };
+  GZ_REGISTER_MODEL_PLUGIN(SpacecraftThrusterForce)
 }
 
 #endif
-
-
-
-// #include <functional>
-// #include <gazebo/gazebo.hh>
-// #include <gazebo/physics/physics.hh>
-// #include <gazebo/common/common.hh>
-// #include "std_msgs/Float32.h"
-// #include "geometry_msgs/Twist.h"
-// #include <gazebo/transport/transport.hh>
-// #include <gazebo/msgs/msgs.hh>

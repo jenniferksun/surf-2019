@@ -1,0 +1,1 @@
+/home/jksun/surf-2019/jksun_ws/devel/.private/blackroom/share/common-lisp/ros/blackroom/msg/Thrusters8.lisp

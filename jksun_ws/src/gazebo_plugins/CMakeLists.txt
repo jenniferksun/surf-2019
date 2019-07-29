@@ -10,6 +10,9 @@ project(gazebo_plugins)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   gazebo_ros
+  std_msgs
+  custom_msgs
+  # message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -48,9 +51,9 @@ find_package(gazebo REQUIRED)
 
 ## Generate messages in the 'msg' folder
 # add_message_files(
+#   DIRECTORY msg
 #   FILES
-#   Message1.msg
-#   Message2.msg
+#   Thrusters8.msg
 # )
 
 ## Generate services in the 'srv' folder
@@ -105,7 +108,7 @@ find_package(gazebo REQUIRED)
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES gazebo_plugins
-#  CATKIN_DEPENDS gazebo_ros roscpp
+  CATKIN_DEPENDS gazebo_ros roscpp std_msgs
 #  DEPENDS system_lib
 )
 
@@ -120,12 +123,13 @@ link_directories(${GAZEBO_LIBRARY_DIRS})
 include_directories(include ${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS} ${GAZEBO_INCLUDE_DIRS})
 
 ## Declare a C++ library
-add_library(${PROJECT_NAME} src/spacecraft_thruster_force.cpp)
+add_library(spacecraft_thruster_force src/spacecraft_thruster_force.cpp)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
 # add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(spacecraft_thruster_force ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
@@ -143,7 +147,7 @@ add_library(${PROJECT_NAME} src/spacecraft_thruster_force.cpp)
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
+target_link_libraries(spacecraft_thruster_force ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
 
 #############
 ## Install ##

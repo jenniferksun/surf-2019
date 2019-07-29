@@ -1,0 +1,1 @@
+/home/jksun/surf-2019/jksun_ws/devel/.private/custom_msgs/share/gennodejs/ros/custom_msgs/_index.js

@@ -80,16 +80,27 @@ install/local/fast: preinstall/fast
 	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 .PHONY : install/local/fast
 
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
 
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
 
-.PHONY : rebuild_cache/fast
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
 
 # Special rule for the target test
 test:
@@ -102,6 +113,17 @@ test/fast: test
 
 .PHONY : test/fast
 
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
+
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
+
+.PHONY : rebuild_cache/fast
+
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
@@ -112,28 +134,6 @@ edit_cache:
 edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
-
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-
-.PHONY : list_install_components/fast
-
-# Special rule for the target install
-install: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install
-
-# Special rule for the target install
-install/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -205,6 +205,19 @@ geometry_msgs_generate_messages_py: cmake_check_build_system
 geometry_msgs_generate_messages_py/fast:
 	$(MAKE) -f CMakeFiles/geometry_msgs_generate_messages_py.dir/build.make CMakeFiles/geometry_msgs_generate_messages_py.dir/build
 .PHONY : geometry_msgs_generate_messages_py/fast
+
+#=============================================================================
+# Target rules for targets named custom_msgs_generate_messages_py
+
+# Build rule for target.
+custom_msgs_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 custom_msgs_generate_messages_py
+.PHONY : custom_msgs_generate_messages_py
+
+# fast build rule for target.
+custom_msgs_generate_messages_py/fast:
+	$(MAKE) -f CMakeFiles/custom_msgs_generate_messages_py.dir/build.make CMakeFiles/custom_msgs_generate_messages_py.dir/build
+.PHONY : custom_msgs_generate_messages_py/fast
 
 #=============================================================================
 # Target rules for targets named sensor_msgs_generate_messages_lisp
@@ -506,19 +519,6 @@ roscpp_generate_messages_nodejs/fast:
 .PHONY : roscpp_generate_messages_nodejs/fast
 
 #=============================================================================
-# Target rules for targets named geometry_msgs_generate_messages_eus
-
-# Build rule for target.
-geometry_msgs_generate_messages_eus: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 geometry_msgs_generate_messages_eus
-.PHONY : geometry_msgs_generate_messages_eus
-
-# fast build rule for target.
-geometry_msgs_generate_messages_eus/fast:
-	$(MAKE) -f CMakeFiles/geometry_msgs_generate_messages_eus.dir/build.make CMakeFiles/geometry_msgs_generate_messages_eus.dir/build
-.PHONY : geometry_msgs_generate_messages_eus/fast
-
-#=============================================================================
 # Target rules for targets named std_srvs_generate_messages_lisp
 
 # Build rule for target.
@@ -699,6 +699,19 @@ sensor_msgs_generate_messages_py: cmake_check_build_system
 sensor_msgs_generate_messages_py/fast:
 	$(MAKE) -f CMakeFiles/sensor_msgs_generate_messages_py.dir/build.make CMakeFiles/sensor_msgs_generate_messages_py.dir/build
 .PHONY : sensor_msgs_generate_messages_py/fast
+
+#=============================================================================
+# Target rules for targets named std_msgs_generate_messages_eus
+
+# Build rule for target.
+std_msgs_generate_messages_eus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 std_msgs_generate_messages_eus
+.PHONY : std_msgs_generate_messages_eus
+
+# fast build rule for target.
+std_msgs_generate_messages_eus/fast:
+	$(MAKE) -f CMakeFiles/std_msgs_generate_messages_eus.dir/build.make CMakeFiles/std_msgs_generate_messages_eus.dir/build
+.PHONY : std_msgs_generate_messages_eus/fast
 
 #=============================================================================
 # Target rules for targets named download_extra_data
@@ -909,32 +922,6 @@ tf2_msgs_generate_messages_eus/fast:
 .PHONY : tf2_msgs_generate_messages_eus/fast
 
 #=============================================================================
-# Target rules for targets named actionlib_generate_messages_py
-
-# Build rule for target.
-actionlib_generate_messages_py: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 actionlib_generate_messages_py
-.PHONY : actionlib_generate_messages_py
-
-# fast build rule for target.
-actionlib_generate_messages_py/fast:
-	$(MAKE) -f CMakeFiles/actionlib_generate_messages_py.dir/build.make CMakeFiles/actionlib_generate_messages_py.dir/build
-.PHONY : actionlib_generate_messages_py/fast
-
-#=============================================================================
-# Target rules for targets named tf2_msgs_generate_messages_py
-
-# Build rule for target.
-tf2_msgs_generate_messages_py: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 tf2_msgs_generate_messages_py
-.PHONY : tf2_msgs_generate_messages_py
-
-# fast build rule for target.
-tf2_msgs_generate_messages_py/fast:
-	$(MAKE) -f CMakeFiles/tf2_msgs_generate_messages_py.dir/build.make CMakeFiles/tf2_msgs_generate_messages_py.dir/build
-.PHONY : tf2_msgs_generate_messages_py/fast
-
-#=============================================================================
 # Target rules for targets named tf2_msgs_generate_messages_nodejs
 
 # Build rule for target.
@@ -1091,30 +1078,108 @@ trajectory_msgs_generate_messages_nodejs/fast:
 .PHONY : trajectory_msgs_generate_messages_nodejs/fast
 
 #=============================================================================
-# Target rules for targets named gazebo_plugins
+# Target rules for targets named geometry_msgs_generate_messages_eus
 
 # Build rule for target.
-gazebo_plugins: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 gazebo_plugins
-.PHONY : gazebo_plugins
+geometry_msgs_generate_messages_eus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 geometry_msgs_generate_messages_eus
+.PHONY : geometry_msgs_generate_messages_eus
 
 # fast build rule for target.
-gazebo_plugins/fast:
-	$(MAKE) -f CMakeFiles/gazebo_plugins.dir/build.make CMakeFiles/gazebo_plugins.dir/build
-.PHONY : gazebo_plugins/fast
+geometry_msgs_generate_messages_eus/fast:
+	$(MAKE) -f CMakeFiles/geometry_msgs_generate_messages_eus.dir/build.make CMakeFiles/geometry_msgs_generate_messages_eus.dir/build
+.PHONY : geometry_msgs_generate_messages_eus/fast
 
 #=============================================================================
-# Target rules for targets named std_msgs_generate_messages_eus
+# Target rules for targets named custom_msgs_generate_messages_cpp
 
 # Build rule for target.
-std_msgs_generate_messages_eus: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 std_msgs_generate_messages_eus
-.PHONY : std_msgs_generate_messages_eus
+custom_msgs_generate_messages_cpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 custom_msgs_generate_messages_cpp
+.PHONY : custom_msgs_generate_messages_cpp
 
 # fast build rule for target.
-std_msgs_generate_messages_eus/fast:
-	$(MAKE) -f CMakeFiles/std_msgs_generate_messages_eus.dir/build.make CMakeFiles/std_msgs_generate_messages_eus.dir/build
-.PHONY : std_msgs_generate_messages_eus/fast
+custom_msgs_generate_messages_cpp/fast:
+	$(MAKE) -f CMakeFiles/custom_msgs_generate_messages_cpp.dir/build.make CMakeFiles/custom_msgs_generate_messages_cpp.dir/build
+.PHONY : custom_msgs_generate_messages_cpp/fast
+
+#=============================================================================
+# Target rules for targets named custom_msgs_generate_messages_eus
+
+# Build rule for target.
+custom_msgs_generate_messages_eus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 custom_msgs_generate_messages_eus
+.PHONY : custom_msgs_generate_messages_eus
+
+# fast build rule for target.
+custom_msgs_generate_messages_eus/fast:
+	$(MAKE) -f CMakeFiles/custom_msgs_generate_messages_eus.dir/build.make CMakeFiles/custom_msgs_generate_messages_eus.dir/build
+.PHONY : custom_msgs_generate_messages_eus/fast
+
+#=============================================================================
+# Target rules for targets named actionlib_generate_messages_py
+
+# Build rule for target.
+actionlib_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 actionlib_generate_messages_py
+.PHONY : actionlib_generate_messages_py
+
+# fast build rule for target.
+actionlib_generate_messages_py/fast:
+	$(MAKE) -f CMakeFiles/actionlib_generate_messages_py.dir/build.make CMakeFiles/actionlib_generate_messages_py.dir/build
+.PHONY : actionlib_generate_messages_py/fast
+
+#=============================================================================
+# Target rules for targets named tf2_msgs_generate_messages_py
+
+# Build rule for target.
+tf2_msgs_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tf2_msgs_generate_messages_py
+.PHONY : tf2_msgs_generate_messages_py
+
+# fast build rule for target.
+tf2_msgs_generate_messages_py/fast:
+	$(MAKE) -f CMakeFiles/tf2_msgs_generate_messages_py.dir/build.make CMakeFiles/tf2_msgs_generate_messages_py.dir/build
+.PHONY : tf2_msgs_generate_messages_py/fast
+
+#=============================================================================
+# Target rules for targets named spacecraft_thruster_force
+
+# Build rule for target.
+spacecraft_thruster_force: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 spacecraft_thruster_force
+.PHONY : spacecraft_thruster_force
+
+# fast build rule for target.
+spacecraft_thruster_force/fast:
+	$(MAKE) -f CMakeFiles/spacecraft_thruster_force.dir/build.make CMakeFiles/spacecraft_thruster_force.dir/build
+.PHONY : spacecraft_thruster_force/fast
+
+#=============================================================================
+# Target rules for targets named custom_msgs_generate_messages_lisp
+
+# Build rule for target.
+custom_msgs_generate_messages_lisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 custom_msgs_generate_messages_lisp
+.PHONY : custom_msgs_generate_messages_lisp
+
+# fast build rule for target.
+custom_msgs_generate_messages_lisp/fast:
+	$(MAKE) -f CMakeFiles/custom_msgs_generate_messages_lisp.dir/build.make CMakeFiles/custom_msgs_generate_messages_lisp.dir/build
+.PHONY : custom_msgs_generate_messages_lisp/fast
+
+#=============================================================================
+# Target rules for targets named custom_msgs_generate_messages_nodejs
+
+# Build rule for target.
+custom_msgs_generate_messages_nodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 custom_msgs_generate_messages_nodejs
+.PHONY : custom_msgs_generate_messages_nodejs
+
+# fast build rule for target.
+custom_msgs_generate_messages_nodejs/fast:
+	$(MAKE) -f CMakeFiles/custom_msgs_generate_messages_nodejs.dir/build.make CMakeFiles/custom_msgs_generate_messages_nodejs.dir/build
+.PHONY : custom_msgs_generate_messages_nodejs/fast
 
 #=============================================================================
 # Target rules for targets named gmock_main
@@ -1174,7 +1239,7 @@ src/spacecraft_thruster_force.o: src/spacecraft_thruster_force.cpp.o
 
 # target to build an object file
 src/spacecraft_thruster_force.cpp.o:
-	$(MAKE) -f CMakeFiles/gazebo_plugins.dir/build.make CMakeFiles/gazebo_plugins.dir/src/spacecraft_thruster_force.cpp.o
+	$(MAKE) -f CMakeFiles/spacecraft_thruster_force.dir/build.make CMakeFiles/spacecraft_thruster_force.dir/src/spacecraft_thruster_force.cpp.o
 .PHONY : src/spacecraft_thruster_force.cpp.o
 
 src/spacecraft_thruster_force.i: src/spacecraft_thruster_force.cpp.i
@@ -1183,7 +1248,7 @@ src/spacecraft_thruster_force.i: src/spacecraft_thruster_force.cpp.i
 
 # target to preprocess a source file
 src/spacecraft_thruster_force.cpp.i:
-	$(MAKE) -f CMakeFiles/gazebo_plugins.dir/build.make CMakeFiles/gazebo_plugins.dir/src/spacecraft_thruster_force.cpp.i
+	$(MAKE) -f CMakeFiles/spacecraft_thruster_force.dir/build.make CMakeFiles/spacecraft_thruster_force.dir/src/spacecraft_thruster_force.cpp.i
 .PHONY : src/spacecraft_thruster_force.cpp.i
 
 src/spacecraft_thruster_force.s: src/spacecraft_thruster_force.cpp.s
@@ -1192,7 +1257,7 @@ src/spacecraft_thruster_force.s: src/spacecraft_thruster_force.cpp.s
 
 # target to generate assembly for a file
 src/spacecraft_thruster_force.cpp.s:
-	$(MAKE) -f CMakeFiles/gazebo_plugins.dir/build.make CMakeFiles/gazebo_plugins.dir/src/spacecraft_thruster_force.cpp.s
+	$(MAKE) -f CMakeFiles/spacecraft_thruster_force.dir/build.make CMakeFiles/spacecraft_thruster_force.dir/src/spacecraft_thruster_force.cpp.s
 .PHONY : src/spacecraft_thruster_force.cpp.s
 
 # Help Target
@@ -1203,9 +1268,13 @@ help:
 	@echo "... depend"
 	@echo "... install/strip"
 	@echo "... install/local"
+	@echo "... install"
+	@echo "... list_install_components"
+	@echo "... test"
 	@echo "... std_srvs_generate_messages_py"
 	@echo "... std_srvs_generate_messages_nodejs"
 	@echo "... geometry_msgs_generate_messages_py"
+	@echo "... custom_msgs_generate_messages_py"
 	@echo "... sensor_msgs_generate_messages_lisp"
 	@echo "... geometry_msgs_generate_messages_lisp"
 	@echo "... actionlib_generate_messages_lisp"
@@ -1220,8 +1289,8 @@ help:
 	@echo "... actionlib_msgs_generate_messages_nodejs"
 	@echo "... roscpp_generate_messages_cpp"
 	@echo "... sensor_msgs_generate_messages_nodejs"
-	@echo "... actionlib_generate_messages_cpp"
 	@echo "... rebuild_cache"
+	@echo "... actionlib_generate_messages_cpp"
 	@echo "... geometry_msgs_generate_messages_nodejs"
 	@echo "... tests"
 	@echo "... tf_generate_messages_lisp"
@@ -1230,7 +1299,6 @@ help:
 	@echo "... gazebo_msgs_generate_messages_lisp"
 	@echo "... std_msgs_generate_messages_lisp"
 	@echo "... roscpp_generate_messages_nodejs"
-	@echo "... geometry_msgs_generate_messages_eus"
 	@echo "... std_srvs_generate_messages_lisp"
 	@echo "... roscpp_generate_messages_py"
 	@echo "... trajectory_msgs_generate_messages_eus"
@@ -1245,6 +1313,8 @@ help:
 	@echo "... dynamic_reconfigure_generate_messages_cpp"
 	@echo "... tf_generate_messages_py"
 	@echo "... sensor_msgs_generate_messages_py"
+	@echo "... edit_cache"
+	@echo "... std_msgs_generate_messages_eus"
 	@echo "... download_extra_data"
 	@echo "... gazebo_msgs_generate_messages_py"
 	@echo "... trajectory_msgs_generate_messages_py"
@@ -1254,7 +1324,6 @@ help:
 	@echo "... actionlib_generate_messages_eus"
 	@echo "... tf_generate_messages_cpp"
 	@echo "... actionlib_generate_messages_nodejs"
-	@echo "... test"
 	@echo "... roscpp_generate_messages_eus"
 	@echo "... rosgraph_msgs_generate_messages_py"
 	@echo "... actionlib_msgs_generate_messages_eus"
@@ -1262,8 +1331,6 @@ help:
 	@echo "... actionlib_msgs_generate_messages_py"
 	@echo "... tf2_msgs_generate_messages_cpp"
 	@echo "... tf2_msgs_generate_messages_eus"
-	@echo "... actionlib_generate_messages_py"
-	@echo "... tf2_msgs_generate_messages_py"
 	@echo "... tf2_msgs_generate_messages_nodejs"
 	@echo "... dynamic_reconfigure_generate_messages_eus"
 	@echo "... gazebo_msgs_generate_messages_cpp"
@@ -1276,11 +1343,14 @@ help:
 	@echo "... trajectory_msgs_generate_messages_cpp"
 	@echo "... trajectory_msgs_generate_messages_lisp"
 	@echo "... trajectory_msgs_generate_messages_nodejs"
-	@echo "... gazebo_plugins"
-	@echo "... std_msgs_generate_messages_eus"
-	@echo "... edit_cache"
-	@echo "... list_install_components"
-	@echo "... install"
+	@echo "... geometry_msgs_generate_messages_eus"
+	@echo "... custom_msgs_generate_messages_cpp"
+	@echo "... custom_msgs_generate_messages_eus"
+	@echo "... actionlib_generate_messages_py"
+	@echo "... tf2_msgs_generate_messages_py"
+	@echo "... spacecraft_thruster_force"
+	@echo "... custom_msgs_generate_messages_lisp"
+	@echo "... custom_msgs_generate_messages_nodejs"
 	@echo "... gmock_main"
 	@echo "... gmock"
 	@echo "... gtest_main"
