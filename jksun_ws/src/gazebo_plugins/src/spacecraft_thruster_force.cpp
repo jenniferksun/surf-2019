@@ -108,7 +108,7 @@ namespace gazebo {
     // Is updated every world cycle
     // Listens to the update event and is broadcasted every
     // simulation iteration.
-    this->update_connection_ = event::Events::ConnectWorldUNew Mechanism for Updating every World CyclepdateBegin(
+    this->update_connection_ = event::Events::ConnectWorldUpdateBegin(
         boost::bind(&SpacecraftThrusterForce::UpdateChild, this));
   }
 

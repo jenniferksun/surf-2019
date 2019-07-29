@@ -8,8 +8,6 @@ CMakeFiles/spacecraft_thruster_force.dir/src/spacecraft_thruster_force.cpp.o
  /opt/ros/melodic/include/boost_161_condition_variable.h
  /opt/ros/melodic/include/boost_161_pthread_condition_variable.h
  /opt/ros/melodic/include/boost_161_pthread_condition_variable_fwd.h
- /opt/ros/melodic/include/geometry_msgs/Vector3.h
- /opt/ros/melodic/include/geometry_msgs/Wrench.h
  /opt/ros/melodic/include/ros/advertise_options.h
  /opt/ros/melodic/include/ros/advertise_service_options.h
  /opt/ros/melodic/include/ros/assert.h

@@ -1,0 +1,40 @@
+<launch>
+<param name="testing" value="false" />
+<!--
+<param name="NAV_RATE" value="10"/>
+<param name="GUIDE_RATE" value="1"/>
+<param name="SCSIM_ATT_ERROR" value="0.2"/>
+<param name="SCSIM_ATT_RATE" value="1"/>
+-->
+<param name="SCSIM_POS_ERROR" value="0.1"/>
+<param name="SCSIM_POS_RATE" value="1"/>
+
+<param name="SMALL_ERROR" value ="0.5"/>
+<param name="SMALL_VELOCITY" value ="0.001"/>
+<param name="BIG_VELOCITY" value ="0.01"/>
+<param name="KP_DEFAULT" value ="0.4"/>
+<param name="KD_DEFAULT" value ="3"/>
+<param name="KP_BIG" value ="4"/>
+<param name="KD_BIG" value ="8"/>
+
+<node name="hivemind_ctrl1" pkg="hivemind" type="control_node" output="screen">
+    <param name="controller_name" type="string" value="sc1" />
+    <param name="controller" type="string" value="spacecraft" />
+    <param name="guidance" type="string" value="waypoint" />
+    <param name="navigation" type="string" value="vicon" />
+    <!--
+    <param name="deadband" type="double" value="0" />
+    <param name="thrust_max" type="double" value="100" />
+    <param name="thrust_min" type="double" value="0" />
+    -->
+
+
+    <param name="kP" type="double" value="2" />
+    <param name="kD" type="double" value="14" />
+</node>
+
+<arg name="logging" default="true" />
+<node pkg="rosbag" type="record" name="rosbag_record_position_control"
+      args="record -o record_postion_control /vicon/sc1/sc1 /sc1/thruster_msg"
+      if="$(arg logging)" />
+</launch>

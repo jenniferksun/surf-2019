@@ -7,8 +7,6 @@ CMakeFiles/spacecraft_thruster_force.dir/src/spacecraft_thruster_force.cpp.o: /h
 CMakeFiles/spacecraft_thruster_force.dir/src/spacecraft_thruster_force.cpp.o: /opt/ros/melodic/include/boost_161_condition_variable.h
 CMakeFiles/spacecraft_thruster_force.dir/src/spacecraft_thruster_force.cpp.o: /opt/ros/melodic/include/boost_161_pthread_condition_variable.h
 CMakeFiles/spacecraft_thruster_force.dir/src/spacecraft_thruster_force.cpp.o: /opt/ros/melodic/include/boost_161_pthread_condition_variable_fwd.h
-CMakeFiles/spacecraft_thruster_force.dir/src/spacecraft_thruster_force.cpp.o: /opt/ros/melodic/include/geometry_msgs/Vector3.h
-CMakeFiles/spacecraft_thruster_force.dir/src/spacecraft_thruster_force.cpp.o: /opt/ros/melodic/include/geometry_msgs/Wrench.h
 CMakeFiles/spacecraft_thruster_force.dir/src/spacecraft_thruster_force.cpp.o: /opt/ros/melodic/include/ros/advertise_options.h
 CMakeFiles/spacecraft_thruster_force.dir/src/spacecraft_thruster_force.cpp.o: /opt/ros/melodic/include/ros/advertise_service_options.h
 CMakeFiles/spacecraft_thruster_force.dir/src/spacecraft_thruster_force.cpp.o: /opt/ros/melodic/include/ros/assert.h

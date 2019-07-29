@@ -1,0 +1,70 @@
+<launch>
+<node name="sato_service" pkg="hivemind" type="SATO_service.py" output="screen" required="true"/>
+<node name ="position_graph" pkg="hivemind" type="plot_service.py" output="screen" required="true"/>
+
+<node name="hivemind_ctrl1" pkg="hivemind" type="control_node" output="screen">
+    <rosparam param="initial_position">[0.0, 0.0 , 0.0]</rosparam>
+    <param name="controller_name" type="string" value="test1" />
+    <param name="controller" type="string" value="test" />
+    <param name="guidance" type="string" value="sato" />
+    <param name="navigation" type="string" value="test" />
+</node>
+
+<node name="hivemind_ctrl2" pkg="hivemind" type="control_node" output="screen" >
+    <rosparam param="initial_position">[1.0, 0.0 , 0.0]</rosparam>
+    <param name="controller_name" type="string" value="test2" />
+    <param name="controller" type="string" value="test" />
+    <param name="guidance" type="string" value="sato" />
+    <param name="navigation" type="string" value="test" />
+</node>
+
+<node name="hivemind_ctrl3" pkg="hivemind" type="control_node" output="screen">
+    <rosparam param="initial_position">[2.0, 0.0 , 0.0]</rosparam>
+    <param name="controller_name" type="string" value="test3" />
+    <param name="controller" type="string" value="test" />
+    <param name="guidance" type="string" value="sato" />
+    <param name="navigation" type="string" value="test" />
+</node>
+
+<node name="hivemind_ctrl4" pkg="hivemind" type="control_node" output="screen" >
+    <rosparam param="initial_position">[0.0, 1.0 , 0.0]</rosparam>
+    <param name="controller_name" type="string" value="test4" />
+    <param name="controller" type="string" value="test" />
+    <param name="guidance" type="string" value="sato" />
+    <param name="navigation" type="string" value="test" />
+</node>
+
+<node name="hivemind_ctrl5" pkg="hivemind" type="control_node" output="screen">
+    <rosparam param="initial_position">[1.0, 1.0 , 0.0]</rosparam>
+    <param name="controller_name" type="string" value="test5" />
+    <param name="controller" type="string" value="test" />
+    <param name="guidance" type="string" value="sato" />
+    <param name="navigation" type="string" value="test" />
+</node>
+
+<node name="hivemind_ctrl6" pkg="hivemind" type="control_node" output="screen" >
+    <rosparam param="initial_position">[2.0, 1.0 , 0.0]</rosparam>
+    <param name="controller_name" type="string" value="test6" />
+    <param name="controller" type="string" value="test" />
+    <param name="guidance" type="string" value="sato" />
+    <param name="navigation" type="string" value="test" />
+</node>
+
+<node name="hivemind_ctrl7" pkg="hivemind" type="control_node" output="screen">
+    <rosparam param="initial_position">[0.0, 2.0 , 0.0]</rosparam>
+    <param name="controller_name" type="string" value="test7" />
+    <param name="controller" type="string" value="test" />
+    <param name="guidance" type="string" value="sato" />
+    <param name="navigation" type="string" value="test" />
+</node>
+
+<node name="hivemind_ctrl8" pkg="hivemind" type="control_node" output="screen" >
+    <rosparam param="initial_position">[1.0, 2.0 , 0.0]</rosparam>
+    <param name="controller_name" type="string" value="test8" />
+    <param name="controller" type="string" value="test" />
+    <param name="guidance" type="string" value="sato" />
+    <param name="navigation" type="string" value="test" />
+</node>
+
+
+</launch>

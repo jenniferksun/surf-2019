@@ -1,0 +1,15 @@
+geometry_msgs/Point x_0
+geometry_msgs/Point x_f
+float64 U_max
+geometry_msgs/PoseArray nodes
+std_msgs/Float64MultiArray radii
+int64 num_steps
+int64 num_this_path
+int64 type_of_dynamics
+float64 delta_t
+std_msgs/Int64MultiArray which_radius_array
+std_msgs/Int64MultiArray this_path
+---
+geometry_msgs/PoseArray x_opt
+geometry_msgs/PoseArray u_opt
+float64 cost

@@ -1,0 +1,8 @@
+prefix=/home/jksun/surf-2019/jksun_ws/install
+
+Name: hivemind
+Description: Description of hivemind
+Version: 0.0.1
+Cflags: -I/home/jksun/surf-2019/jksun_ws/install/include
+Libs: -L/home/jksun/surf-2019/jksun_ws/install/lib 
+Requires: message_runtime geometry_msgs mav_msgs nav_msgs roscpp

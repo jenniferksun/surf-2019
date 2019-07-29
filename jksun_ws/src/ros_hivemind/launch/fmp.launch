@@ -1,0 +1,24 @@
+<launch>
+<param name="name" type="string" value="sc1" />
+<param name="controller" type="string" value="spacecraft" />
+<param name="guidance" type="string" value="fmp" />
+<param name="navigation" type="string" value="vicon" />
+<param name="testing" value="true" />
+
+<!-- Arguments for FMP -->
+<arg name="mav_name" default="hummingbird"/>
+<arg name="world_name" default="kitchen"/>
+<arg name="enable_logging" default="false" />
+<arg name="enable_ground_truth" default="true" />
+<arg name="log_file" default="$(arg mav_name)" />
+<arg name="init_x" default="-2.0"/>
+<arg name="init_y" default="-2.0"/>
+<arg name="init_z" default="1.0"/>
+<arg name="fin_x" default="3.0"/>
+<arg name="fin_y" default="6.0"/>
+<arg name="fin_z" default="1.0"/>
+<arg name="paused" value="true"/>
+<node name="cvx_service" pkg="hivemind" type="cvx_service.py" output="screen" required="true"/>
+
+<node name="hivemind_ctrl" pkg="hivemind" type="control_node" output="screen"/>
+</launch>

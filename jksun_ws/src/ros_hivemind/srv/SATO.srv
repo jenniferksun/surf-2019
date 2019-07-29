@@ -1,0 +1,6 @@
+geometry_msgs/Point[] initial_positions
+geometry_msgs/Point[] final_positions
+int32 n
+int32 index
+---
+geometry_msgs/Point[] trajectory

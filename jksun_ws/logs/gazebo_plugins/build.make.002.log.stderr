@@ -1,0 +1,7 @@
+[01m[K/home/jksun/surf-2019/jksun_ws/src/gazebo_plugins/src/spacecraft_thruster_force.cpp:[m[K In member function ‘[01m[Kvirtual void gazebo::SpacecraftThrusterForce::Load(gazebo::physics::ModelPtr, sdf::ElementPtr)[m[K’:
+[01m[K/home/jksun/surf-2019/jksun_ws/src/gazebo_plugins/src/spacecraft_thruster_force.cpp:111:47:[m[K [01;31m[Kerror: [m[K‘[01m[KConnectWorldUNew[m[K’ is not a member of ‘[01m[Kgazebo::event::Events[m[K’
+     this->update_connection_ = event::Events::[01;31m[KConnectWorldUNew[m[K Mechanism for Updating every World CyclepdateBegin(
+                                               [01;31m[K^~~~~~~~~~~~~~~~[m[K
+make[2]: *** [CMakeFiles/spacecraft_thruster_force.dir/src/spacecraft_thruster_force.cpp.o] Error 1
+make[1]: *** [CMakeFiles/spacecraft_thruster_force.dir/all] Error 2
+make: *** [all] Error 2
