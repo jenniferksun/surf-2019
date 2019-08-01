@@ -1,8 +1,0 @@
-prefix=/home/jksun/surf-2019/jksun_ws/devel/.private/blackroom
-
-Name: blackroom
-Description: Description of blackroom
-Version: 0.0.0
-Cflags: -I/home/jksun/surf-2019/jksun_ws/devel/.private/blackroom/include
-Libs: -L/home/jksun/surf-2019/jksun_ws/devel/.private/blackroom/lib 
-Requires: message_runtime

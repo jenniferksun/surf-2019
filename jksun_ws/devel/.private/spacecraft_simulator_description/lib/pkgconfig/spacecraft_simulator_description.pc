@@ -1,8 +1,0 @@
-prefix=/home/jksun/surf-2019/jksun_ws/devel/.private/spacecraft_simulator_description
-
-Name: spacecraft_simulator_description
-Description: Description of spacecraft_simulator_description
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/jksun/surf-2019/jksun_ws/devel/.private/spacecraft_simulator_description/lib 
-Requires: 

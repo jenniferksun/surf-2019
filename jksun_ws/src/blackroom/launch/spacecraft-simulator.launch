@@ -4,7 +4,7 @@
   <arg name="csv" default="vel.csv"/>
 
   <!-- Load the spacecraft simulator URDF model into the parameter server -->
-  <param name="robot_description" textfile="$(find spacecraft_simulator_description)/urdf/spacecraft_simulator.urdf" />
+  <param name="robot_description" textfile="$(find spacecraft_simulator_description)/urdf/3DOF_sc.urdf" />
 
   <!-- Start Gazebo with an empty world -->
   <env name="GAZEBO_MODEL_PATH" value="$(find blackroom)/models"/>
@@ -21,7 +21,7 @@
   <!-- Spawn a spacecraft simulator in Gazebo, taking the description from the
   parameter server -->
   <node name="sc" pkg="gazebo_ros" type="spawn_model"
-        args="-param robot_description -urdf -x 1.0 -y 2.5 -z 0.25
+        args="-param robot_description -urdf -x 0.0 -y 0.0 -z 0.25
               -model sc"/>
 
   <!-- <node name="spawn_urdf2" pkg="gazebo_ros" type="spawn_model"

@@ -47,6 +47,7 @@ add_message_files(
   DIRECTORY msg
   FILES
   Thrusters8.msg
+  Thrusters16.msg
 )
 
 ## Generate services in the 'srv' folder

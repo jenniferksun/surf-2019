@@ -1,1 +1,0 @@
-/home/jksun/surf-2019/jksun_ws/devel/.private/spacecraft_simulator_control/lib/pkgconfig/spacecraft_simulator_control.pc

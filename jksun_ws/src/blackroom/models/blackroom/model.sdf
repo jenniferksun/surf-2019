@@ -3,11 +3,20 @@
   <model name="blackroom">
     <static>true</static>
     <link name="link">
-      <collision name="collision">
+      <visual name="visual">
         <geometry>
           <mesh>
             <uri>model://blackroom/mesh/blackroom.dae</uri>
           </mesh>
+        </geometry>
+      </visual>
+
+      <collision name="floor_collision">
+        <pose>0 0 0.125 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>9.61 5.75 0.25</size>
+          </box>
         </geometry>
         <surface>
           <friction>
@@ -18,13 +27,77 @@
           </friction>
         </surface>
       </collision>
-      <visual name="visual">
+
+      <!-- <collision name='sticky_mat_collision'>
+        <pose>1.315 -3.305 0 0 0 0</pose>
         <geometry>
-          <mesh>
-            <uri>model://blackroom/mesh/blackroom.dae</uri>
-          </mesh>
+          <box>
+            <size>3.12 1.50 0.25</size>
+          </box>
         </geometry>
-      </visual>
+        <surface>
+          <friction>
+            <ode>
+              <mu>1.0</mu>
+              <mu2>1.0</mu2>
+              <slip1>1.0</slip1>
+              <slip2>1.0</slip2>
+            </ode>
+          </friction>
+        </surface>
+      </collision> -->
+
+      <collision name='left_wall'>
+        <pose>-3 0 2.335 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.25 9.61 4.42</size>
+          </box>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0</mu>
+              <mu2>0</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+
+      <collision name='back_wall'>
+        <pose>0 4.93 2.335 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>5.75 0.25 4.42</size>
+          </box>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0</mu>
+              <mu2>0</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+
+      <collision name='right_wall'>
+        <pose>3 0 2.335 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.25 9.61 4.42</size>
+          </box>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0</mu>
+              <mu2>0</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+
     </link>
   </model>
 </sdf>

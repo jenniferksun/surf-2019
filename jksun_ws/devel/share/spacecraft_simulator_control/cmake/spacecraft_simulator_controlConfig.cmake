@@ -1,1 +1,0 @@
-/home/jksun/surf-2019/jksun_ws/devel/.private/spacecraft_simulator_control/share/spacecraft_simulator_control/cmake/spacecraft_simulator_controlConfig.cmake

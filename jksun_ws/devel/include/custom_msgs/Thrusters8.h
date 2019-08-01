@@ -1,1 +1,0 @@
-/home/jksun/surf-2019/jksun_ws/devel/.private/custom_msgs/include/custom_msgs/Thrusters8.h

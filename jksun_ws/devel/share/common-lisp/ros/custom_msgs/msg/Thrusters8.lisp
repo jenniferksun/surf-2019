@@ -1,1 +1,0 @@
-/home/jksun/surf-2019/jksun_ws/devel/.private/custom_msgs/share/common-lisp/ros/custom_msgs/msg/Thrusters8.lisp

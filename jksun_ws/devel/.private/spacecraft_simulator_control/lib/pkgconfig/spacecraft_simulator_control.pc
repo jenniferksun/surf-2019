@@ -1,8 +1,0 @@
-prefix=/home/jksun/surf-2019/jksun_ws/devel/.private/spacecraft_simulator_control
-
-Name: spacecraft_simulator_control
-Description: Description of spacecraft_simulator_control
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/jksun/surf-2019/jksun_ws/devel/.private/spacecraft_simulator_control/lib 
-Requires: 

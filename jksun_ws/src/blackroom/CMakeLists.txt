@@ -12,7 +12,6 @@ find_package(catkin REQUIRED
   std_msgs
   custom_msgs
   gazebo_plugins
-  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -50,10 +49,9 @@ find_package(catkin REQUIRED
 
 
 ##Generate messages in the 'msg' folder
-add_message_files(
-  FILES
-  Thrusters8.msg
-)
+# add_message_files(
+#   FILES
+# )
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -107,7 +105,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES blackroom
-    CATKIN_DEPENDS message_runtime
+# CATKIN_DEPENDS message_runtime
 #  DEPENDS system_lib
 )
 

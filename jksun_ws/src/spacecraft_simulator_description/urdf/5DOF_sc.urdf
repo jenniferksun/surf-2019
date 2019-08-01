@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- Urdf format of the ARCL 3DOF spacecraft simulator. -->
+<!-- Urdf format of the ARCL 5DOF spacecraft simulator. -->
 
 <robot name="spacecraft_simulator">
   <!-- Seems unnecessary to define a joint as the model moves as a whole
@@ -23,9 +23,9 @@
   </joint> -->
 
   <!-- Represents the spacecraft simulator model -->
-  <link name="sc">
+  <link name="base_link">
     <inertial>
-      <!-- Mass and inertia according to solidworks model of full 3DOF sc -->
+      <!-- Mass and inertia according to solidworks model of full 5DOF sc -->
       <mass value="9.08"/>
       <!-- Sets up center of mass of link at the bottom of the ball joint -->
       <origin xyz="0 0 0.74522"/>
