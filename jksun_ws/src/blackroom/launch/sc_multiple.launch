@@ -1,4 +1,5 @@
 <launch>
+  <!-- NEEDS TO BE UPDATED. Should find a better way of spawning multiple sc -->
   <arg name="world_name" default="$(find blackroom)/worlds/blackroom.world"/>
   <arg name="paused" value="true"/>
   <arg name="csv" default="vel.csv"/>

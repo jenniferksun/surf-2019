@@ -22,6 +22,7 @@
     <param name="controller" type="string" value="spacecraft" />
     <param name="guidance" type="string" value="waypoint" />
     <param name="navigation" type="string" value="vicon" />
+    <!-- <param name ="simulation" type="string" value="model" /> -->
     <!--
     <param name="deadband" type="double" value="0" />
     <param name="thrust_max" type="double" value="100" />

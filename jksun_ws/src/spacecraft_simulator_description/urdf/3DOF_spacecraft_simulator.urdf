@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<!-- Urdf format of the ARCL 3DOF spacecraft simulator. -->
+
+<robot name="spacecraft_simulator">
+  <!-- Represents the spacecraft simulator model -->
+  <link name="sc">
+    <inertial>
+      <!-- Mass and inertia according to solidworks model of full 3DOF sc -->
+      <!-- <mass value="9.08"/> -->
+      <mass value="19.890"/>
+      <!-- Sets up center of mass of link at the bottom of the ball joint -->
+      <origin xyz="0 0 0.74522"/>
+      <!-- <inertia ixx="27.60" iyy="3.36" izz="28.06"
+               ixy="-5.21" ixz="0.86" iyz="-4.00"/> -->
+      <!-- From simplified 3DOF CAD -->
+      <!-- <inertia ixx="2.51" iyy="0.50" izz="2.60"
+               ixy="-0.55" ixz="0.16" iyz="-0.43"/> -->
+      <!-- From complete 5DOF CAD -->
+      <inertia ixx="4.09" iyy="0.68" izz="4.07"
+               ixy="-0.11" ixz="0.03" iyz="-0.02"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <!-- <mesh filename="package://spacecraft_simulator_description/meshes/spacecraft-simulator-simple.dae"/> -->
+        <mesh filename="package://spacecraft_simulator_description/meshes/sc_simple_ball.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <!-- Determines position on link where collision is checked -->
+      <origin xyz="0 0 0"/>
+
+      <geometry>
+        <!-- <mesh filename="package://spacecraft_simulator_description/meshes/spacecraft-simulator-simple.dae"/> -->
+        <!-- <mesh filename="package://spacecraft_simulator_description/meshes/sc_simple_ball.dae"/> -->
+        <mesh filename="package://spacecraft_simulator_description/meshes/sc_simple_ball_collision.dae"/>
+        <!-- <box>0.4572 0.4572 0.83882</box> -->
+      </geometry>
+      <surface>
+        <contact>
+          <ode>
+            <!-- Counts a collision at a minimum of 0.0 meters of overlap -->
+            <min_depth>0.0</min_depth>
+            <max_vel>0.5</max_vel>
+          </ode>
+        </contact>
+        <friction>
+          <ode>
+            <mu>0.0</mu>
+            <mu2>0.0</mu2>
+          </ode>
+        </friction>
+      </surface>
+    </collision>
+  </link>
+
+  <gazebo>
+    <!-- Plugin that controls planar movement of the model using velocity. -->
+    <!-- <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <odometryRate>20.0</odometryRate>
+      <robotBaseFrame>sc</robotBaseFrame>
+    </plugin> -->
+
+    <!-- Plugin that controls movement of the model using forces and torques at
+    the model's center of mass. -->
+    <!-- <plugin name="force_controller" filename="libgazebo_ros_force.so">
+      <bodyName>sc</bodyName>
+      <topicName>ros_force</topicName>
+    </plugin> -->
+
+    <!-- Plugin that controls movement of the model using forces at relative
+    positions to the model's center of mass. Designed the model forces applied
+    at specific thruster locations. -->
+    <plugin name="thruster_force_controller" filename="libspacecraft_thruster_force.so">
+      <bodyName>sc</bodyName>
+      <topicName>thruster_force</topicName>
+    </plugin>
+
+    <plugin name="sc_model_pose" filename="libgazebo_ros_p3d.so">
+      <alwaysOn>true</alwaysOn>
+      <updateRate>100.0</updateRate>
+      <bodyName>sc</bodyName>
+      <topicName>sc_pose</topicName>
+      <gaussianNoise>0.0</gaussianNoise>
+      <frameName>map</frameName>
+      <xyzOffsets>0 0 0</xyzOffsets>
+      <rpyOffsets>0 0 0</rpyOffsets>
+    </plugin>
+
+    <!-- <plugin name="sc_model_pose_test" filename="libgazebo_ros_p3d.so">
+      <alwaysOn>true</alwaysOn>
+      <updateRate>100.0</updateRate>
+      <bodyName>sc</bodyName>
+      <topicName>sc_pose_test</topicName>
+      <gaussianNoise>0.0</gaussianNoise>
+      <frameName>map</frameName>
+      <xyzOffsets>0 0 0</xyzOffsets>
+      <rpyOffsets>0 0 0</rpyOffsets>
+    </plugin> -->
+  </gazebo>
+
+  <!-- Links actuator (what controls movement) and joint (what is being moved)
+  to use ros_control with the spacecraft model -->
+  <!-- <transmission name="sc_transmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="base_link_anchor">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="base_footprint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </actuator>
+  </transmission> -->
+</robot>

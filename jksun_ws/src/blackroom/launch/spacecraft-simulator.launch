@@ -1,17 +1,31 @@
 <launch>
+  <!-- Launches virtual world with blackroom and spacecraft simulator. Set
+    argument sim to yes (sim:=yes) to start blackroom nodes for simulation
+    environment. With simulation, additional controller is required for Vicon
+    to thruster messages (e.g. hivemind package GNC framework). Set
+    argument record to yes (record:=yes) to record model poses in Gazebo to a
+    csv file (default as blackroom/scripts/poses_to_csv_files/testing.csv). -->
+
+  <!-- Arguments with defaults that can be manually changed by command line -->
   <arg name="world_name" default="$(find blackroom)/worlds/blackroom.world"/>
+  <arg name="sim" default="no"/>
+  <arg name="spacecraft" default="sc1"/>
+  <arg name="record" default="no"/>
+  <arg name="csv" default="testing.csv"/>
+
   <arg name="paused" value="true"/>
-  <arg name="csv" default="vel.csv"/>
+  <arg name="verbose" value="false"/>
 
   <!-- Load the spacecraft simulator URDF model into the parameter server -->
-  <param name="robot_description" textfile="$(find spacecraft_simulator_description)/urdf/3DOF_sc.urdf" />
+  <param name="robot_description" textfile="$(find spacecraft_simulator_description)/urdf/3DOF_spacecraft_simulator.urdf" />
 
   <!-- Start Gazebo with an empty world -->
   <env name="GAZEBO_MODEL_PATH" value="$(find blackroom)/models"/>
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <!-- Load in model of blackroom world -->
     <arg name="world_name" value="$(arg world_name)"/>
     <arg name="paused" value="$(arg paused)"/>
-    <arg name="verbose" value="true" />
+    <arg name="verbose" value="$(arg verbose)" />
     <!-- more default parameters can be changed here -->
   </include>
     <!-- <arg name="world_name" value="$(find blackroom)/worlds/$(arg world_name).world" />
@@ -19,24 +33,27 @@
   </include> -->
 
   <!-- Spawn a spacecraft simulator in Gazebo, taking the description from the
-  parameter server -->
+  parameter server. Set to spawn 0.01 in the z-direction to rest on the
+  blackroom floor-->
   <node name="sc" pkg="gazebo_ros" type="spawn_model"
-        args="-param robot_description -urdf -x 0.0 -y 0.0 -z 0.25
+        args="-param robot_description -urdf -x 0.0 -y 0.0 -z 0.01
               -model sc"/>
 
-  <!-- <node name="spawn_urdf2" pkg="gazebo_ros" type="spawn_model"
-        args="-param robot_description -urdf -x -2.0 -y -0.5 -z 0.0
-              -model sc2"/>
+  <!-- Start nodes to integrate simulation environment with the hivemind GNC
+  algorithms. Also requires additional controller for vicon to thruster
+  messages (e.g. can launch hivemind package for its controller). -->
+  <group if="$(eval sim == 'yes')">
+    <node pkg="blackroom" type="simulation.py" name="model_to_vicon"/>
+    <node pkg="blackroom" type="thruster_to_model.py" name="thruster_to_model"
+      args="$(arg spacecraft)"/>
 
-  <node name="spawn_urdf3" pkg="gazebo_ros" type="spawn_model"
-        args="-param robot_description -urdf -x 0.5 -y -1.0 -z 0.0
-              -model sc3"/> -->
+    <!-- Starts node for recording spacecraft model poses into csv file. Csv
+    file is defaulted at blackroom/src/scripts/poses_to_csv_files/testing.csv. -->
+    <group if="$(eval record == 'yes')">
+      <node pkg="blackroom" type="pose_plot.py" name="poses_to_csv"
+        args="$(find blackroom)/scripts/poses_to_csv_files/$(arg csv)
+          $(arg spacecraft)" output="screen"/>
+    </group>
+  </group>
 
-  <!-- Start keyboard driver node for recording keyboard inputs -->
-  <!-- <node pkg="blackroom" type="robot_key_control.py" name="robot_key_control" output="screen"/> -->
-
-  <!-- Start node to control robot with ramping motion -->
-  <!-- <node pkg="blackroom" type="robot_movement.py" name="robot_movement" args="$(arg csv)" output="screen"/> -->
-  <!-- <node pkg="blackroom" type="robot_key_movement.py" name="robot_key_movement" args="$(arg csv)" output="screen"/> -->
-  <!-- <node pkg="blackroom" type="robot_key_movement_ramps.py" name="robot_key_movement_ramps" output="screen"/> -->
 </launch>

@@ -2,12 +2,12 @@
 <sdf version="1.5">
   <world name="default">
 
-    <!-- a simple light source, the sun -->
+    <!-- Simple light source, the sun -->
     <include>
       <uri>model://sun</uri>
     </include>
 
-    <!-- a brighter light source for the blackroom -->
+    <!-- Brighter light source for the blackroom -->
     <light type="point" name="point_light">
       <pose>0 0 4 0 0 0</pose>
       <attenuation>
@@ -19,38 +19,16 @@
       <cast_shadows>false</cast_shadows>
     </light>
 
-    <!-- a bottom surface plane, the ground -->
+    <!-- Bottom surface plane, the ground -->
     <include>
       <uri>model://ground_plane</uri>
     </include>
 
-    <!-- model of the ARCL blackroom -->
+    <!-- Model of the ARCL spaceroom -->
     <include>
       <uri>model://blackroom</uri>
       <name>blackroom</name>
-      <pose>0 0 0 0 0 0</pose>
+      <pose>-0.04 -0.725 0 0 0 0</pose>
     </include>
-
-    <!-- model of the ARCL blackroom walls -->
-    <!-- <include>
-      <uri>model://blackroom-walls</uri>
-      <name>blackroom-walls</name>
-      <pose>0 0 0 0 0 0</pose>
-    </include> -->
-
-    <!-- model of the ARCL blackroom floor -->
-    <!-- <include>
-      <uri>model://blackroom-floor</uri>
-      <name>blackroom-floor</name>
-      <pose>0 0 0 0 0 0</pose>
-    </include> -->
-
-    <!-- model of the ARCL spacecraft simulator -->
-    <!-- <include>
-      <uri>model://spacecraft-simulator</uri>
-      <name>spacecraft simulator</name>
-      <pose>0 0 0.25 0 0 0</pose>
-      <static>false</static>
-    </include> -->
   </world>
 </sdf>

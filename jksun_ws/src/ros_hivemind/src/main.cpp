@@ -32,6 +32,7 @@ int main( int argc, char* argv[] )
     ros::NodeHandle n;
 
     std::string controller_name, controller, guidance, navigation;
+    // std::string simulation;
     if(!ros::param::get("~controller_name", controller_name)
         || !ros::param::get("~controller", controller)
         || !ros::param::get("~guidance", guidance)
@@ -39,6 +40,8 @@ int main( int argc, char* argv[] )
         std::cerr << "must specify controller_name, controller, guidance, and navigation"<<std::endl;
         return -1;
     }
+
+    // ros::param::get("~simulation", simulation)
 
     ros::param::get("NAV_RATE", NAV_RATE);
     ros::param::get("GUIDE_RATE", GUIDE_RATE);

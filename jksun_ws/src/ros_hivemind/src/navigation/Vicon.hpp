@@ -10,7 +10,7 @@
 #include "Navigation.hpp"
 #include "geometry_msgs/TransformStamped.h"
 
-class Vicon : public Navigation{
+class Vicon : public Navigation {
 private:
     ros::NodeHandle node;
     ros::Subscriber pos_sub;
@@ -20,6 +20,7 @@ private:
      * @param vmsg the ROS message from the Vicon with the new position
      */
     void position_callback(const geometry_msgs::TransformStamped &vmsg);
+
 public:
     /**
      * Initialize the Vicon's ROS channel for listening to the position
