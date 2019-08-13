@@ -52,7 +52,7 @@
     <group if="$(eval record == 'yes')">
       <node pkg="blackroom" type="pose_plot.py" name="poses_to_csv"
         args="$(find blackroom)/scripts/poses_to_csv_files/$(arg csv)
-          $(arg spacecraft)" output="screen"/>
+          $(arg spacecraft)"/>
     </group>
   </group>
 
