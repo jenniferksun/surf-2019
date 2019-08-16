@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-# Program to translate key inputs read from the robot_key_control.py publisher
-# into Wrench messages to control a robot.
+# Program to publish messages from a csv file into Thruster8 messages to control
+# movement of the model.
 
 import csv
 import os
@@ -11,7 +11,7 @@ from std_msgs.msg import String
 from custom_msgs.msg import Thrusters8
 
 def commands():
-    thrusters_pub = rospy.Publisher('thrusters_force', Thrusters8, queue_size=1)
+    thrusters_pub = rospy.Publisher('thruster_force', Thrusters8, queue_size=1)
     # FYmMZp_pub = rospy.Publisher('FYmMZp', Wrench, queue_size=1)    # 6 a
     # FYmMZm_pub = rospy.Publisher('FYmMZm', Wrench, queue_size=1)    # 7 b
     # FXmMZp_pub = rospy.Publisher('FXmMZp', Wrench, queue_size=1)    # 2 c

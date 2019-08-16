@@ -1,4 +1,4 @@
-#Thruster values for the 16DOF (16 thruster) Spacecraft simulator
+#Thruster values for the 6DOF (16 thruster) Spacecraft simulator
 std_msgs/Header header
 float32 FXmMZm
 float32 FXmMZp

@@ -30,8 +30,6 @@
       <origin xyz="0 0 0"/>
 
       <geometry>
-        <!-- <mesh filename="package://spacecraft_simulator_description/meshes/spacecraft-simulator-simple.dae"/> -->
-        <!-- <mesh filename="package://spacecraft_simulator_description/meshes/sc_simple_ball.dae"/> -->
         <mesh filename="package://spacecraft_simulator_description/meshes/sc_simple_ball_collision.dae"/>
         <!-- <box>0.4572 0.4572 0.83882</box> -->
       </geometry>
@@ -73,7 +71,7 @@
     <!-- Plugin that controls movement of the model using forces at relative
     positions to the model's center of mass. Designed the model forces applied
     at specific thruster locations. -->
-    <plugin name="thruster_force_controller" filename="libspacecraft_thruster_force.so">
+    <plugin name="thruster_force_controller" filename="libspacecraft_thruster8_force.so">
       <bodyName>sc</bodyName>
       <topicName>thruster_force</topicName>
     </plugin>

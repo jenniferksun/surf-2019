@@ -123,13 +123,17 @@ link_directories(${GAZEBO_LIBRARY_DIRS})
 include_directories(include ${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS} ${GAZEBO_INCLUDE_DIRS})
 
 ## Declare a C++ library
-add_library(spacecraft_thruster_force src/spacecraft_thruster_force.cpp)
+add_library(spacecraft_thruster8_force src/spacecraft_thruster8_force.cpp)
+add_library(spacecraft_thruster16_force src/spacecraft_thruster16_force.cpp)
+
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
 # add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-add_dependencies(spacecraft_thruster_force ${catkin_EXPORTED_TARGETS})
+add_dependencies(spacecraft_thruster8_force ${catkin_EXPORTED_TARGETS})
+add_dependencies(spacecraft_thruster16_force ${catkin_EXPORTED_TARGETS})
+
 
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
@@ -147,7 +151,9 @@ add_dependencies(spacecraft_thruster_force ${catkin_EXPORTED_TARGETS})
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(spacecraft_thruster_force ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
+target_link_libraries(spacecraft_thruster8_force ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
+target_link_libraries(spacecraft_thruster16_force ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
+
 
 #############
 ## Install ##

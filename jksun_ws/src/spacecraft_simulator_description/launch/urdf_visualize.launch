@@ -2,11 +2,11 @@
      Use roslaunch spacecraft_simulator_description urdf_visualize.launch -->
 
 <launch>
-  <arg name="model" default="$(find spacecraft_simulator_description)/urdf/spacecraft_simulator.urdf"/>
+  <arg name="model" default="5DOF_spacecraft_simulator.urdf"/>
   <arg name="gui" default="true" />
   <arg name="rvizconfig" default="$(find urdf_tutorial)/rviz/urdf.rviz" />
 
-  <param name="robot_description" command="cat $(arg model)"/>
+  <param name="robot_description" command="cat $(find spacecraft_simulator_description)/urdf/$(arg model)"/>
   <param name="use_gui" value="$(arg gui)"/>
 
   <!-- Model joint values -->

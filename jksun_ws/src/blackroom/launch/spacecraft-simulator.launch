@@ -28,13 +28,10 @@
     <arg name="verbose" value="$(arg verbose)" />
     <!-- more default parameters can be changed here -->
   </include>
-    <!-- <arg name="world_name" value="$(find blackroom)/worlds/$(arg world_name).world" />
-    <arg name="paused" value="$(arg paused)"/>
-  </include> -->
 
   <!-- Spawn a spacecraft simulator in Gazebo, taking the description from the
   parameter server. Set to spawn 0.01 in the z-direction to rest on the
-  blackroom floor-->
+  blackroom floor -->
   <node name="sc" pkg="gazebo_ros" type="spawn_model"
         args="-param robot_description -urdf -x 0.0 -y 0.0 -z 0.01
               -model sc"/>
