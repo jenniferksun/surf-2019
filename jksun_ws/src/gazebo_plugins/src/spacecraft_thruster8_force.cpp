@@ -5,6 +5,7 @@
  * head of spacecraft). This plugin was inspired by the Gazebo ROS force plugin
  * found in the gazebo_ros_pkgs package.
  *
+ * Maintainer: Jennifer Sun (jksun@caltech.edu)
  */
 
 #include <gazebo_plugins/spacecraft_thruster8_force.h>

@@ -8,7 +8,7 @@
       upper stage -->
       <mass value="11.126"/>
       <!-- Sets up center of mass of link at the bottom of the ball joint -->
-      <origin xyz="0 0 0.70078"/>
+      <origin xyz="0 0 0.69429"/>
       <!-- Inertia according to solidworks model of the full 5DOF sc
       upper stage -->
       <inertia ixx="0.27" iyy="0.48" izz="0.25"
@@ -16,7 +16,7 @@
     </inertial>
 
     <visual>
-      <origin xyz="0 0 0.70078"/>
+      <origin xyz="0 0 -0.10077"/>
       <geometry>
         <mesh filename="package://spacecraft_simulator_description/meshes/sc_top_ball.dae"/>
       </geometry>
@@ -24,7 +24,7 @@
 
     <collision>
       <!-- Determines position on link where collision is checked -->
-      <origin xyz="0 0 0.10062"/>
+      <origin xyz="0 0 0"/>
 
       <geometry>
         <!-- <box size="0.4572 0.4572 0.19318"/> -->
@@ -49,13 +49,21 @@
   </link>
 
   <!-- Joint linking upper_stage and base_link, allowing for movement in 5DOF -->
-  <joint name="base_link_anchor" type="revolute">
+  <joint name="air_bearing" type="revolute">
     <axis xyz="1 1 0"/>
-    <limit effort="1000.0" lower="-0.7854" upper="0.7854" velocity="0.5"/>
-    <origin xyz="0 0 0.74522" rpy="0 0 0"/>
-    <parent link="upper_stage"/>
-    <child link="base_link"/>
+    <limit effort="1000.0" lower="-0.7854" upper="0.7854" velocity="0.2"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="upper_stage"/>
   </joint>
+
+  <!-- <joint name="air_bearing_y" type="revolute">
+    <axis xyz="0 1 0"/>
+    <limit effort="1000.0" lower="-0.7854" upper="0.7854" velocity="0.2"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="upper_stage"/>
+  </joint> -->
 
   <!-- Represents the spacecraft simulator model -->
   <link name="base_link">
@@ -107,7 +115,7 @@
     at specific thruster locations. -->
     <plugin name="thruster_force_controller" filename="libspacecraft_thruster16_force.so">
       <bodyName>upper_stage</bodyName>
-      <topicName>thruster_force</topicName>
+      <topicName>thruster16_force</topicName>
     </plugin>
 
     <plugin name="sc_model_pose" filename="libgazebo_ros_p3d.so">

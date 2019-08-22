@@ -19,16 +19,17 @@
       <inertia ixx="4.09" iyy="0.68" izz="4.07"
                ixy="-0.11" ixz="0.03" iyz="-0.02"/>
     </inertial>
+
     <visual>
       <geometry>
         <!-- <mesh filename="package://spacecraft_simulator_description/meshes/spacecraft-simulator-simple.dae"/> -->
         <mesh filename="package://spacecraft_simulator_description/meshes/sc_simple_ball.dae"/>
       </geometry>
     </visual>
+
     <collision>
       <!-- Determines position on link where collision is checked -->
       <origin xyz="0 0 0"/>
-
       <geometry>
         <mesh filename="package://spacecraft_simulator_description/meshes/sc_simple_ball_collision.dae"/>
         <!-- <box>0.4572 0.4572 0.83882</box> -->
@@ -73,41 +74,44 @@
     at specific thruster locations. -->
     <plugin name="thruster_force_controller" filename="libspacecraft_thruster8_force.so">
       <bodyName>sc</bodyName>
-      <topicName>thruster_force</topicName>
+      <topicName>thruster8_force</topicName>
     </plugin>
 
+    <!-- Plugin that provides a 3D position interface for ground truth.
+    Publishes pose of the spacecraft link in simulation using Odometry
+    messages. -->
     <plugin name="sc_model_pose" filename="libgazebo_ros_p3d.so">
       <alwaysOn>true</alwaysOn>
       <updateRate>100.0</updateRate>
       <bodyName>sc</bodyName>
-      <topicName>sc_pose</topicName>
+      <topicName>sc1_pose</topicName>
       <gaussianNoise>0.0</gaussianNoise>
       <frameName>map</frameName>
       <xyzOffsets>0 0 0</xyzOffsets>
       <rpyOffsets>0 0 0</rpyOffsets>
     </plugin>
-
-    <!-- <plugin name="sc_model_pose_test" filename="libgazebo_ros_p3d.so">
-      <alwaysOn>true</alwaysOn>
-      <updateRate>100.0</updateRate>
-      <bodyName>sc</bodyName>
-      <topicName>sc_pose_test</topicName>
-      <gaussianNoise>0.0</gaussianNoise>
-      <frameName>map</frameName>
-      <xyzOffsets>0 0 0</xyzOffsets>
-      <rpyOffsets>0 0 0</rpyOffsets>
-    </plugin> -->
   </gazebo>
 
-  <!-- Links actuator (what controls movement) and joint (what is being moved)
-  to use ros_control with the spacecraft model -->
-  <!-- <transmission name="sc_transmission">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="base_link_anchor">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="base_footprint">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    </actuator>
-  </transmission> -->
+  <!-- Specific format for gazebo sensor plugin. Uses a gazebo sensor for
+  simulating an inertial mostion sensor. -->
+  <gazebo reference="sc">
+    <gravity>true</gravity>
+    <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <visualize>true</visualize>
+      <topic>__default_topic__</topic>
+      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+        <topicName>imu</topicName>
+        <bodyName>sc</bodyName>
+        <updateRateHZ>10.0</updateRateHZ>
+        <gaussianNoise>0.0</gaussianNoise>
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 0 0</rpyOffset>
+        <frameName>sc</frameName>
+      </plugin>
+      <pose>0 0 0 0 0 0</pose>
+    </sensor>
+  </gazebo>
+
 </robot>

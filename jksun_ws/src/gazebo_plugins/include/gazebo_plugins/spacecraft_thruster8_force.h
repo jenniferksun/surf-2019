@@ -5,6 +5,7 @@
  * between pedestal and head of spacecraft). This plugin was inspired by the
  * Gazebo ROS force plugin found in the gazebo_ros_pkgs package.
  *
+ * Maintainer: Jennifer Sun (jksun@caltech.edu)
  */
 
 #ifndef GAZEBO_ROS_FORCE_HH

@@ -1,0 +1,18 @@
+<launch>
+  <!-- Test launch for docking controller -->
+  <arg name="spacecraft_name" default="sc1"/>
+  <arg name="trajectory_csv" default="$(arg spacecraft_name)_pro60.csv"/>
+  <arg name="record_csv" default="$(arg spacecraft_name)_test.csv"/>
+
+  <node pkg="docking_controller" type="docking_controller.py"
+    name="docking_$(arg spacecraft_name)" args="$(arg spacecraft_name)
+      $(find docking_controller)/src/trajectories_csv/$(arg record_csv)"
+    output="screen"/>
+
+  <node pkg="docking_controller" type="pro_trajectory.py"
+    name="pro_trajectory_$(arg spacecraft_name)"
+    args="$(arg spacecraft_name)
+      $(find docking_controller)/src/trajectories_csv/$(arg trajectory_csv)"
+    output="screen"/>
+
+</launch>

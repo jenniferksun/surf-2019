@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # Program which plots the pose of the spacecraft simulator model. Writes poses
-# out to csv file (through 1st command-line argument) in poses_to_csv_files
+# out to csv file (through 1st command-line argument) in the poses_to_csv_files
 # directory.
 #
 # These poses can also be compared with the truth, using Vicon. This is done
@@ -8,6 +8,8 @@
 # (specified through 2nd command-line argument) and determine pose of the
 # actual spacecraft throught the thruster_to_model script. Uncomment VICON
 # portions of the following code to do so.
+#
+# Maintainer: Jennifer Sun (jksun@caltech.edu)
 
 import csv
 import math
@@ -20,7 +22,6 @@ from custom_msgs.msg import Thrusters8
 from gazebo_msgs.msg import ModelState
 from nav_msgs.msg import Odometry
 
-model_pose = []
 # vicon_pose = []   # VICON
 # thruster_msgs = []
 
@@ -28,6 +29,7 @@ def yaw_from_quaternion(q):
     t1 = 2.0 * (q.x * q.y + q.z * q.w)
     t2 = 1.0 - 2.0 * (q.y * q.y + q.z * q.z)
     return math.atan2(t1, t2)
+
 
 def add_csv_header(file_name):
     data = csv.writer(file_name, delimiter=',')
@@ -40,6 +42,8 @@ def add_csv_header(file_name):
     ])
     return data
 
+
+# Unused
 def add_csv_header_thruster(file_name):
     data = csv.writer(file_name, delimiter=',')
     data.writerow([
@@ -56,6 +60,7 @@ def add_csv_header_thruster(file_name):
     ])
     return data
 
+
 def add_csv_rows(data, measurement_type, time, pos_x, pos_y, theta):
         data.writerow([
             time,
@@ -65,6 +70,8 @@ def add_csv_rows(data, measurement_type, time, pos_x, pos_y, theta):
             theta
         ])
 
+
+# Unused
 def add_csv_rows_thruster(data, measurement_type, thruster_data):
         data.writerow([
             thruster_data[0],
@@ -79,6 +86,7 @@ def add_csv_rows_thruster(data, measurement_type, thruster_data):
             thruster_data[8]
         ])
 
+
 def model_callback(msg):
     global model_pose
     time = msg.header.stamp.to_sec()
@@ -89,6 +97,7 @@ def model_callback(msg):
                                            msg.pose.pose.orientation.z,
                                            msg.pose.pose.orientation.w))
     model_pose.append((time, x, y, angle))
+
 
 def vicon_callback(msg):
     global vicon_pose
@@ -101,6 +110,7 @@ def vicon_callback(msg):
                                            msg.transform.rotation.w))
     vicon_pose.append((time, x, y, angle))
 
+# Unused
 def thrusters_callback(msg):
     global thruster_msgs
     time = rospy.Time.now().to_sec()
@@ -108,22 +118,23 @@ def thrusters_callback(msg):
                                 msg.FYpMZp, msg.FYpMZm, msg.FYmMZp, msg.FYmMZm))
 
 if __name__ == '__main__':
+    model_pose = []
 
     rospy.init_node('pose_plot', log_level=rospy.INFO)
 
     pose_csvfile = open(str(sys.argv[1]), 'w+')
     pose_data = add_csv_header(pose_csvfile)
 
-    # thruster_csvfile = open('thruster_' + str(sys.argv[2]), 'w+')
+    # thruster_csvfile = open('thruster_' + str(sys.argv[1]), 'w+')c
     # thruster_data = add_csv_header_thruster(thruster_csvfile)
 
-    # sc = sys.argv[2]    # VICON
+    spacecraft_name = sys.argv[2]
 
-    rospy.Subscriber('sc_pose', Odometry, model_callback)
-    # rospy.Subscriber('vicon/' + sc + '/' + sc, TransformStamped, vicon_callback)  # VICON
-    # rospy.Subscriber(sc + '/thruster_msg', Thrusters8, thrusters_callback)
+    rospy.Subscriber(spacecraft_name + '_pose', Odometry, model_callback)
+    # rospy.Subscriber('vicon/' + spacecraft_name + '/' + spacecraft_name, TransformStamped, vicon_callback)  # VICON
+    # rospy.Subscriber(spacecraft_name + '/thruster_msg', Thrusters8, thrusters_callback)
 
-    global model_pose
+    # global model_pose
     # global vicon_pose   # VICON
     # global thruster_msgs
 

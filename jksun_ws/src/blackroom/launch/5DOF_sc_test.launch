@@ -1,6 +1,6 @@
 <launch>
   <arg name="world_name" default="$(find blackroom)/worlds/blackroom.world"/>
-  <arg name="spacecraft" default="sc1"/>
+  <arg name="spacecraft_name" default="sc1"/>
 
   <arg name="paused" value="true"/>
   <arg name="verbose" value="true"/>

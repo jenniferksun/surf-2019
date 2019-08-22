@@ -1,4 +1,9 @@
 #!/usr/bin/env python
+# This script publishes the pose of a spacecraft simulator to a dummy Vicon
+# topic. This allows for the model's simulation environment ro utilize the same
+# framework to control the physical spacecraft.
+#
+# Maintainer: Jennifer Sun (jksun@caltech.edu)
 
 import rospy
 from geometry_msgs.msg import TransformStamped
@@ -23,9 +28,12 @@ def callback(msg):
 
 if __name__ == '__main__':
     rospy.init_node('model_to_GNC', log_level=rospy.INFO)
+
+    spacecraft_name = sys.argv[1]
+
     # rospy.Subscriber('gazebo/model_states', ModelState, callback)
-    rospy.Subscriber('sc_pose', Odometry, callback)
+    rospy.Subscriber(spacecraft_name + '_pose', Odometry, callback)
     # rospy.Subscriber('sc_pose_test', Odometry, callback)
-    dummy_vicon_pub = rospy.Publisher('vicon/sc1/sc1', TransformStamped, queue_size=1)
+    dummy_vicon_pub = rospy.Publisher('vicon/' + spacecraft_name + '/' + spacecraft_name, TransformStamped, queue_size=1)
 
     rospy.spin()
