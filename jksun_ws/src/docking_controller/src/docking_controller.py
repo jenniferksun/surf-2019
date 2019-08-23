@@ -288,7 +288,7 @@ if __name__ == '__main__':
 
     rospy.Subscriber("vicon/" + sys.argv[1] + "/" + sys.argv[1] + "/", TransformStamped, get_position_and_yaw_angle_cb)
     rospy.Subscriber("sc_pose", Odometry, get_angular_velocity)
-    # rospy.Subscriber(sys.argv[1] + "/imu", Imu, get_angular_velocity)
+    # rospy.Subscriber(sys.argv[1] + "/Imu", Imu, get_angular_velocity)
     rospy.Subscriber(sys.argv[1] + "_short" + "/setpoint_x", Float32, get_setpoint_x)
     rospy.Subscriber(sys.argv[1] + "_short" + "/setpoint_y", Float32, get_setpoint_y)
 

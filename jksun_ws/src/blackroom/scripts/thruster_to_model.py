@@ -121,10 +121,10 @@ if __name__ == '__main__':
 
     spacecraft_type = sys.argv[2]
     if spacecraft_type == '3DOF':
-        thruster8_forces_pub = rospy.Publisher('thruster8_force', Thrusters8, queue_size=1)
+        thruster8_forces_pub = rospy.Publisher(spacecraft_name + '/thruster8_force', Thrusters8, queue_size=1)
 
     elif spacecraft_type == '5DOF':
-        thruster16_forces_pub = rospy.Publisher('thruster16_force', Thrusters16, queue_size=1)
+        thruster16_forces_pub = rospy.Publisher(spacecraft_name + '/thruster16_force', Thrusters16, queue_size=1)
 
     # Gets the starting position of the spacecraft using Vicon from a bag file
     # start_vicon = rospy.wait_for_message('vicon/' + sc + '/' + sc, TransformStamped)

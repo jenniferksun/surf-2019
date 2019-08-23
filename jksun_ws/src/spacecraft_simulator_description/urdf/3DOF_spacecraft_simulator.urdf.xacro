@@ -2,6 +2,11 @@
 <!-- Urdf format of the ARCL 3DOF spacecraft simulator. -->
 
 <robot name="spacecraft_simulator">
+
+<!--===========================================================================
+SPACECRAFT SIMULATOR MODEL (specifies urdf link properties for 3DOF sc model)
+============================================================================-->
+
   <!-- Represents the spacecraft simulator model -->
   <link name="sc">
     <inertial>
@@ -52,6 +57,10 @@
     </collision>
   </link>
 
+<!--===========================================================================
+GAZEBO PLUGINS (plugins used to connect ROS with the Gazebo model)
+============================================================================-->
+
   <gazebo>
     <!-- Plugin that controls planar movement of the model using velocity. -->
     <!-- <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
@@ -74,7 +83,7 @@
     at specific thruster locations. -->
     <plugin name="thruster_force_controller" filename="libspacecraft_thruster8_force.so">
       <bodyName>sc</bodyName>
-      <topicName>thruster8_force</topicName>
+      <topicName>$(arg spacecraft_name)/thruster8_force</topicName>
     </plugin>
 
     <!-- Plugin that provides a 3D position interface for ground truth.
@@ -84,7 +93,7 @@
       <alwaysOn>true</alwaysOn>
       <updateRate>100.0</updateRate>
       <bodyName>sc</bodyName>
-      <topicName>sc1_pose</topicName>
+      <topicName>$(arg spacecraft_name)_pose</topicName>
       <gaussianNoise>0.0</gaussianNoise>
       <frameName>map</frameName>
       <xyzOffsets>0 0 0</xyzOffsets>
@@ -94,7 +103,7 @@
 
   <!-- Specific format for gazebo sensor plugin. Uses a gazebo sensor for
   simulating an inertial mostion sensor. -->
-  <gazebo reference="sc">
+  <!-- <gazebo reference="sc">
     <gravity>true</gravity>
     <sensor name="imu_sensor" type="imu">
       <always_on>true</always_on>
@@ -102,7 +111,7 @@
       <visualize>true</visualize>
       <topic>__default_topic__</topic>
       <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
-        <topicName>imu</topicName>
+        <topicName>$(arg spacecraft_name)/Imu</topicName>
         <bodyName>sc</bodyName>
         <updateRateHZ>10.0</updateRateHZ>
         <gaussianNoise>0.0</gaussianNoise>
@@ -112,6 +121,6 @@
       </plugin>
       <pose>0 0 0 0 0 0</pose>
     </sensor>
-  </gazebo>
+  </gazebo> -->
 
 </robot>

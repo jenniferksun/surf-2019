@@ -10,22 +10,56 @@
 
     Maintainer: Jennifer Sun (jksun@caltech.edu) -->
 
-  <!-- Arguments with defaults that can be manually changed by command line -->
+<!--===========================================================================
+ARGUMENTS (defaults can be changed here or by command line)
+============================================================================-->
+
   <arg name="world_name" default="$(find blackroom)/worlds/blackroom.world"/>
   <!-- Controller frequency -->
   <arg name="ctrl_freq" default="1"/>
-  <arg name="sim" default="no"/>
   <arg name="spacecraft_name" default="sc1"/>
   <arg name="spacecraft_type" default="3DOF"/>
+
+  <!-- Arguments to start simulation and spacecraft pose recording -->
+  <arg name="sim" default="no"/>
   <arg name="record" default="no"/>
   <arg name="csv" default="testing.csv"/>
 
+  <!-- Arguments that control Gazebo world environment -->
   <arg name="paused" value="true"/>
   <arg name="verbose" value="false"/>
 
-  <!-- Load the spacecraft simulator URDF model into the parameter server -->
-  <param name="robot_description"
-    textfile="$(find spacecraft_simulator_description)/urdf/3DOF_spacecraft_simulator.urdf.xacro"/>
+  <!-- Spawn location of spacecraft 1 -->
+  <arg name="sc1_x" default="0.0"/>
+  <arg name="sc1_y" default="0.0"/>
+
+  <!-- Set spawn_sc2 to yes to spawn spacecraft 2 (sc2). Spawn location
+  can also be set -->
+  <arg name="spawn_sc2" default="no"/>
+  <arg name="sc2_x" default="2.0"/>
+  <arg name="sc2_y" default="2.0"/>
+
+  <!-- Set spawn_sc3 to yes to spawn spacecraft 3 (sc3). Spawn location
+  can also be set -->
+  <arg name="spawn_sc3" default="no"/>
+  <arg name="sc3_x" default="0.0"/>
+  <arg name="sc3_y" default="0.0"/>
+
+  <!-- Set spawn_sc4 to yes to spawn spacecraft 4 (sc4). Spawn location
+  can also be set -->
+  <arg name="spawn_sc4" default="no"/>
+  <arg name="sc4_x" default="0.0"/>
+  <arg name="sc4_y" default="0.0"/>
+
+  <!-- Set spawn_sc5 to yes to spawn spacecraft 5 (sc5). Spawn location
+  can also be set -->
+  <arg name="spawn_sc5" default="no"/>
+  <arg name="sc5_x" default="0.0"/>
+  <arg name="sc5_y" default="0.0"/>
+
+<!--===========================================================================
+GAZEBO WORLD (launches empty world and loads in model world of ARCL blackroom)
+============================================================================-->
 
   <!-- Start Gazebo with an empty world -->
   <env name="GAZEBO_MODEL_PATH" value="$(find blackroom)/models"/>
@@ -37,12 +71,22 @@
     <!-- more default parameters can be changed here -->
   </include>
 
+<!--===========================================================================
+SPACECRAFT SIMULATOR MODEL (default loads in spacecraft 1 (sc1) at world origin)
+============================================================================-->
+
+  <!-- Load the spacecraft simulator URDF model into the parameter server -->
+  <param name="sc1_description"
+    command="$(find xacro)/xacro
+      '$(find spacecraft_simulator_description)/urdf/3DOF_spacecraft_simulator.urdf.xacro'
+      spacecraft_name:=$(arg spacecraft_name)"/>
+
   <!-- Spawn a spacecraft simulator in Gazebo, taking the description from the
   parameter server. Set to spawn 0.01 in the z-direction to rest on the
   blackroom floor -->
-  <node name="sc" pkg="gazebo_ros" type="spawn_model"
-        args="-param robot_description -urdf -x 0.4 -y 2.4 -z 0.01
-              -model sc"/>
+  <node name="sc1" pkg="gazebo_ros" type="spawn_model"
+        args="-param sc1_description -urdf -x $(arg sc1_x) -y $(arg sc1_y)
+          -z 0.01 -model sc1"/>
 
   <!-- Start nodes to integrate simulation environment with the hivemind GNC
   algorithms. Also requires additional controller for vicon to thruster
@@ -61,5 +105,72 @@
           $(arg spacecraft_name)"/>
     </group>
   </group>
+
+<!--===========================================================================
+OTHER SPACECRAFT SIMULATOR MODELS (can spawn multiple spacecrafts at once)
+============================================================================-->
+
+  <!-- Spawn spacecraft 2 (sc2) into Gazebo -->
+  <group if="$(eval spawn_sc2 == 'yes')">
+    <param name="sc2_description"
+      command="$(find xacro)/xacro
+        '$(find spacecraft_simulator_description)/urdf/3DOF_spacecraft_simulator.urdf.xacro'
+        spacecraft_name:=sc2"/>
+    <node name="sc2" pkg="gazebo_ros" type="spawn_model"
+          args="-param sc2_description -urdf -x $(arg sc2_x) -y $(arg sc2_y)
+            -z 0.01 -model sc2"/>
+  </group>
+
+  <!-- Spawn spacecraft 3 (sc3) into Gazebo -->
+  <group if="$(eval spawn_sc3 == 'yes')">
+    <param name="sc3_description"
+      command="$(find xacro)/xacro
+        '$(find spacecraft_simulator_description)/urdf/3DOF_spacecraft_simulator.urdf.xacro'
+        spacecraft_name:=sc3"/>
+    <node name="sc3" pkg="gazebo_ros" type="spawn_model"
+          args="-param sc3_description -urdf -x $(arg sc3_x) -y $(arg sc3_y)
+            -z 0.01 -model sc3"/>
+  </group>
+
+  <!-- Spawn spacecraft 4 (sc4) into Gazebo -->
+  <group if="$(eval spawn_sc4 == 'yes')">
+    <param name="sc4_description"
+      command="$(find xacro)/xacro
+        '$(find spacecraft_simulator_description)/urdf/3DOF_spacecraft_simulator.urdf.xacro'
+        spacecraft_name:=sc4"/>
+    <node name="sc4" pkg="gazebo_ros" type="spawn_model"
+          args="-param sc4_description -urdf -x $(arg sc4_x) -y $(arg sc4_y)
+            -z 0.01 -model sc4"/>
+  </group>
+
+  <!-- Spawn spacecraft 5 (sc5) into Gazebo -->
+  <group if="$(eval spawn_sc5 == 'yes')">
+    <param name="sc5_description"
+      command="$(find xacro)/xacro
+        '$(find spacecraft_simulator_description)/urdf/3DOF_spacecraft_simulator.urdf.xacro'
+        spacecraft_name:=sc5"/>
+    <node name="sc5" pkg="gazebo_ros" type="spawn_model"
+          args="-param sc5_description -urdf -x $(arg sc5_x) -y $(arg sc5_y)
+            -z 0.01 -model sc5"/>
+  </group>
+
+
+<!--===========================================================================
+TEMPLATE FOR SPAWNING MORE SC MODELS (spawns 'sc?'; replace '?' with number)
+============================================================================-->
+
+  <!-- <arg name="spawn_sc?" default="no"/>
+  <arg name="sc?_x" default="0.0"/>
+  <arg name="sc?_y" default="0.0"/>
+
+  <group if="$(eval spawn_sc? == 'yes')">
+    <param name="sc?_description"
+      command="$(find xacro)/xacro.py
+        '$(find spacecraft_simulator_description)/urdf/3DOF_spacecraft_simulator.urdf.xacro'
+        spacecraft_name:=sc?"/>
+    <node name="sc?" pkg="gazebo_ros" type="spawn_model"
+          args="-param sc5_description -urdf -x $(arg sc?_x) -y $(arg sc?_y)
+            -z 0.01 -model sc?"/>
+  </group> -->
 
 </launch>
