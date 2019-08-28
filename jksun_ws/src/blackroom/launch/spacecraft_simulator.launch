@@ -93,9 +93,11 @@ SPACECRAFT SIMULATOR MODEL (default loads in spacecraft 1 (sc1) at world origin)
   algorithms. Also requires additional controller for vicon to thruster
   messages (e.g. can launch hivemind package for its controller). -->
   <group if="$(eval sim == 'yes')">
-    <node pkg="blackroom" type="simulation.py" name="model_to_vicon"
+    <node pkg="blackroom" type="simulation.py"
+      name="$(arg spacecraft_name)_model_to_vicon"
       args="$(arg spacecraft_name)"/>
-    <node pkg="blackroom" type="thruster_to_model.py" name="thruster_to_model"
+    <node pkg="blackroom" type="thruster_to_model.py"
+      name="thruster_to_$(arg spacecraft_name)_model"
       args="$(arg spacecraft_name) $(arg spacecraft_type) $(arg ctrl_freq)"/>
 
     <!-- Starts node for recording spacecraft model poses into csv file. Csv
@@ -120,6 +122,20 @@ OTHER SPACECRAFT SIMULATOR MODELS (can spawn multiple spacecrafts at once)
     <node name="sc2" pkg="gazebo_ros" type="spawn_model"
           args="-param sc2_description -urdf -x $(arg sc2_x) -y $(arg sc2_y)
             -z 0.01 -model sc2"/>
+
+    <group if="$(eval sim == 'yes')">
+      <node pkg="blackroom" type="simulation.py" name="sc2_model_to_vicon"
+        args="sc2"/>
+      <node pkg="blackroom" type="thruster_to_model.py"
+        name="thruster_to_sc2_model" args="sc2 $(arg spacecraft_type)
+          $(arg ctrl_freq)"/>
+
+      <group if="$(eval record == 'yes')">
+        <node pkg="blackroom" type="pose_plot.py" name="sc2_poses_to_csv"
+          args="$(find blackroom)/scripts/poses_to_csv_files/$(arg csv)
+            sc2"/>
+      </group>
+    </group>
   </group>
 
   <!-- Spawn spacecraft 3 (sc3) into Gazebo -->

@@ -14,11 +14,14 @@ from std_msgs.msg import String
 from custom_msgs.msg import Thrusters8, Thrusters16
 
 def commands():
-    if sys.argv[2] == '3DOF':
-        thrusters8_pub = rospy.Publisher('sc1/thruster8_force', Thrusters8, queue_size=1)
+    spacecraft_name = sys.argv[2]
+    spacecraft_type = sys.argv[3]
 
-    if sys.argv[2] == '5DOF':
-        thrusters16_pub = rospy.Publisher('sc1/thruster16_force', Thrusters16, queue_size=1)
+    if spacecraft_type == '3DOF':
+        thrusters8_pub = rospy.Publisher(spacecraft_name + '/thruster8_force', Thrusters8, queue_size=1)
+
+    if spacecraft_type == '5DOF':
+        thrusters16_pub = rospy.Publisher(spacecraft_name + '/thruster16_force', Thrusters16, queue_size=1)
 
     rospy.init_node('sc_thrusters_force', log_level=rospy.INFO)
 
