@@ -1,0 +1,182 @@
+<?xml version="1.0"?>
+<!-- Urdf format of the ARCL 5DOF spacecraft simulator. -->
+
+<robot name="spacecraft_simulator">
+  <!-- Represents a simplified pedestal design for the spacecraft simulator
+  model -->
+  <link name="base_link">
+    <inertial>
+      <!-- Mass according to rough measuring of the full 5DOF sc
+      upper stage -->
+      <mass value="8.764"/>
+      <!-- Sets up center of mass of link at the bottom of the ball joint -->
+      <origin xyz="0 0 0.155"/>
+      <!-- Inertia according to solidworks model of the full 5DOF sc
+      upper stage -->
+      <inertia ixx="3.79" iyy="0.20" izz="3.80"
+               ixy="-0.12" ixz="0.01" iyz="-0.01"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://spacecraft_simulator_description/meshes/sc_bot_ball_v2.dae"/>
+      </geometry>
+    </visual>
+
+    <!-- Simplified collision model of pedestal top -->
+    <collision>
+      <origin xyz="0 0 0.365085"/>
+      <geometry>
+        <cylinder radius="0.037" length="0.65317"/>
+      </geometry>
+    </collision>
+
+    <!-- Simplified collision model of pedestal bottom -->
+    <collision>
+      <!-- Determines position on link where collision is checked -->
+      <origin xyz="0 0 0.02521"/>
+      <geometry>
+        <!-- <mesh filename="package://spacecraft_simulator_description/meshes/sc_bot_ball_v2.dae"/> -->
+        <cylinder radius="0.2159" length="0.05042"/>
+      </geometry>
+      <surface>
+        <contact>
+          <ode>
+            <!-- Counts a collision at a minimum of 0.0 meters of overlap -->
+            <min_depth>0.0</min_depth>
+            <max_vel>0.5</max_vel>
+          </ode>
+        </contact>
+        <friction>
+          <ode>
+            <mu>0.0</mu>
+            <mu2>0.0</mu2>
+          </ode>
+        </friction>
+      </surface>
+    </collision>
+  </link>
+
+  <!-- Restricted hinge joint representing movement of the upper_stage about
+  the y-axis. This approximates the pitch rotational movement for the 5-DOF
+  model -->
+  <joint name="air_bearing_pitch" type="revolute">
+    <origin xyz="0 0 0.69429"/>
+    <limit effort="1000.0" lower="-0.7854" upper="0.7854" velocity="0.2"/>
+    <parent link="base_link"/>
+    <child link="upper_stage_pitch"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <!-- Dummy link to support pitch rotational movement of the upper_stage link -->
+  <link name="upper_stage_pitch">
+    <inertial>
+      <mass value="0.025" />
+      <inertia ixx="5.8083e-4" ixy="0" ixz="0" iyy="3.0833e-5" iyz="0" izz="5.9083e-4" />
+    </inertial>
+  </link>
+
+  <!-- Restricted hinge joint representing movement of the upper_stage about
+  the x-axis. This approximates the roll rotational movement for the 5-DOF
+  model -->
+  <joint name="air_bearing_roll" type="revolute">
+    <limit effort="1000.0" lower="-0.7854" upper="0.7854" velocity="0.2"/>
+    <parent link="upper_stage_pitch"/>
+    <child link="upper_stage_roll"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+
+  <!-- Dummy link to support roll rotational movement of the upper_stage link -->
+  <link name="upper_stage_roll">
+    <inertial>
+      <mass value="0.025" />
+      <inertia ixx="5.8083e-4" ixy="0" ixz="0" iyy="3.0833e-5" iyz="0" izz="5.9083e-4" />
+    </inertial>
+  </link>
+
+  <!-- Fixed joint keeping the upper_stage and base_link connected -->
+  <joint name="air_bearing" type="fixed">
+    <origin xyz="0 0 -0.69429"/>
+    <parent link="upper_stage_roll"/>
+    <child link="upper_stage"/>
+  </joint>
+
+  <!-- Link representing the simplified upper stage design of the spacecraft
+  simulator model -->
+  <link name="upper_stage">
+    <inertial>
+      <!-- Mass according to rough measuring of the full 5DOF sc
+      upper stage -->
+      <mass value="11.126"/>
+      <!-- Sets up center of mass of link at the bottom of the ball joint -->
+      <origin xyz="0 0 0.69429"/>
+      <!-- Inertia according to solidworks model of the full 5DOF sc
+      upper stage -->
+      <inertia ixx="0.27" iyy="0.48" izz="0.25"
+               ixy="0.00" ixz="0.02" iyz="0.00"/>
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 -0.06"/>
+      <geometry>
+        <mesh filename="package://spacecraft_simulator_description/meshes/sc_top_ball.dae"/>
+      </geometry>
+    </visual>
+
+    <!-- Simple collision model of the upper stage's top plate -->
+    <collision>
+      <origin xyz="0 0 0.7782"/>
+      <geometry>
+        <box size="0.4572 0.4572 0.00318"/>
+      </geometry>
+    </collision>
+
+    <!-- Simple collision models of the upper stage's walls -->
+    <collision>
+      <origin xyz="0.224775 0 0.68161"/>
+      <geometry>
+        <box size="0.00765 0.4572 0.19"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0 0.224775 0.68161"/>
+      <geometry>
+        <box size="0.4572 0.00765 0.19"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="-0.224775 0 0.68161"/>
+      <geometry>
+        <box size="0.00765 0.4572 0.19"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0 -0.224775 0.68161"/>
+      <geometry>
+        <box size="0.4572 0.00765 0.19"/>
+      </geometry>
+    </collision>
+  </link>
+
+
+  <gazebo>
+    <!-- Plugin that controls movement of the model using forces at relative
+    positions to the model's center of mass. Designed the model forces applied
+    at specific thruster locations. -->
+    <plugin name="thruster_force_controller" filename="libspacecraft_thruster16_force.so">
+      <bodyName>upper_stage_roll</bodyName>
+      <topicName>$(arg spacecraft_name)/thruster16_force</topicName>
+    </plugin>
+
+    <plugin name="sc_model_pose" filename="libgazebo_ros_p3d.so">
+      <alwaysOn>true</alwaysOn>
+      <updateRate>100.0</updateRate>
+      <bodyName>upper_stage_roll</bodyName>
+      <topicName>$(arg spacecraft_name)_pose</topicName>
+      <gaussianNoise>0.0</gaussianNoise>
+      <frameName>map</frameName>
+      <xyzOffsets>0 0 0</xyzOffsets>
+      <rpyOffsets>0 0 0</rpyOffsets>
+    </plugin>
+  </gazebo>
+
+</robot>

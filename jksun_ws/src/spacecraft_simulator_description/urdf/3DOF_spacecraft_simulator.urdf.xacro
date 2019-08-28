@@ -1,5 +1,9 @@
 <?xml version="1.0"?>
-<!-- Urdf format of the ARCL 3DOF spacecraft simulator. -->
+<!-- Xacro format of the ARCL 3DOF spacecraft simulator. Can be parsed into
+  an urdf. Xacro format used to pass in arguments for unique topic names for
+  each respective 3DOF spacecraft model.
+
+  Author: Jennifer Sun (jksun@caltech.edu) -->
 
 <robot name="spacecraft_simulator">
 
@@ -8,7 +12,7 @@ SPACECRAFT SIMULATOR MODEL (specifies urdf link properties for 3DOF sc model)
 ============================================================================-->
 
   <!-- Represents the spacecraft simulator model -->
-  <link name="sc">
+  <link name="base_link">
     <inertial>
       <!-- Mass and inertia according to solidworks model of full 3DOF sc -->
       <!-- <mass value="9.08"/> -->
@@ -27,17 +31,15 @@ SPACECRAFT SIMULATOR MODEL (specifies urdf link properties for 3DOF sc model)
 
     <visual>
       <geometry>
-        <!-- <mesh filename="package://spacecraft_simulator_description/meshes/spacecraft-simulator-simple.dae"/> -->
         <mesh filename="package://spacecraft_simulator_description/meshes/sc_simple_ball.dae"/>
       </geometry>
     </visual>
 
     <collision>
       <!-- Determines position on link where collision is checked -->
-      <origin xyz="0 0 0"/>
+      <origin xyz="0 0 0.41941"/>
       <geometry>
-        <mesh filename="package://spacecraft_simulator_description/meshes/sc_simple_ball_collision.dae"/>
-        <!-- <box>0.4572 0.4572 0.83882</box> -->
+        <box size="0.4572 0.4572 0.83882"/>
       </geometry>
       <surface>
         <contact>
@@ -62,27 +64,11 @@ GAZEBO PLUGINS (plugins used to connect ROS with the Gazebo model)
 ============================================================================-->
 
   <gazebo>
-    <!-- Plugin that controls planar movement of the model using velocity. -->
-    <!-- <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
-      <commandTopic>cmd_vel</commandTopic>
-      <odometryTopic>odom</odometryTopic>
-      <odometryFrame>odom</odometryFrame>
-      <odometryRate>20.0</odometryRate>
-      <robotBaseFrame>sc</robotBaseFrame>
-    </plugin> -->
-
-    <!-- Plugin that controls movement of the model using forces and torques at
-    the model's center of mass. -->
-    <!-- <plugin name="force_controller" filename="libgazebo_ros_force.so">
-      <bodyName>sc</bodyName>
-      <topicName>ros_force</topicName>
-    </plugin> -->
-
     <!-- Plugin that controls movement of the model using forces at relative
     positions to the model's center of mass. Designed the model forces applied
     at specific thruster locations. -->
     <plugin name="thruster_force_controller" filename="libspacecraft_thruster8_force.so">
-      <bodyName>sc</bodyName>
+      <bodyName>base_link</bodyName>
       <topicName>$(arg spacecraft_name)/thruster8_force</topicName>
     </plugin>
 
@@ -92,7 +78,7 @@ GAZEBO PLUGINS (plugins used to connect ROS with the Gazebo model)
     <plugin name="sc_model_pose" filename="libgazebo_ros_p3d.so">
       <alwaysOn>true</alwaysOn>
       <updateRate>100.0</updateRate>
-      <bodyName>sc</bodyName>
+      <bodyName>base_link</bodyName>
       <topicName>$(arg spacecraft_name)_pose</topicName>
       <gaussianNoise>0.0</gaussianNoise>
       <frameName>map</frameName>
@@ -100,6 +86,22 @@ GAZEBO PLUGINS (plugins used to connect ROS with the Gazebo model)
       <rpyOffsets>0 0 0</rpyOffsets>
     </plugin>
   </gazebo>
+
+  <!-- Plugin that controls planar movement of the model using velocity. -->
+  <!-- <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
+    <commandTopic>cmd_vel</commandTopic>
+    <odometryTopic>odom</odometryTopic>
+    <odometryFrame>odom</odometryFrame>
+    <odometryRate>20.0</odometryRate>
+    <robotBaseFrame>base_link</robotBaseFrame>
+  </plugin> -->
+
+  <!-- Plugin that controls movement of the model using forces and torques at
+  the model's center of mass. -->
+  <!-- <plugin name="force_controller" filename="libgazebo_ros_force.so">
+    <bodyName>base_link</bodyName>
+    <topicName>ros_force</topicName>
+  </plugin> -->
 
   <!-- Specific format for gazebo sensor plugin. Uses a gazebo sensor for
   simulating an inertial mostion sensor. -->
@@ -112,7 +114,7 @@ GAZEBO PLUGINS (plugins used to connect ROS with the Gazebo model)
       <topic>__default_topic__</topic>
       <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
         <topicName>$(arg spacecraft_name)/Imu</topicName>
-        <bodyName>sc</bodyName>
+        <bodyName>base_link</bodyName>
         <updateRateHZ>10.0</updateRateHZ>
         <gaussianNoise>0.0</gaussianNoise>
         <xyzOffset>0 0 0</xyzOffset>

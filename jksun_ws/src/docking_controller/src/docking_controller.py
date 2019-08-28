@@ -14,6 +14,7 @@ import numpy as np
 import math
 import time
 from math import cos, sin, pi
+from nav_msgs.msg import Odometry
 from geometry_msgs.msg import TransformStamped, PoseStamped
 from sensor_msgs.msg import Imu, MagneticField
 import csv
@@ -69,7 +70,8 @@ def get_position_and_yaw_angle_cb(msg):
 
 def get_angular_velocity(msg):
     # sc['angular_velocity_z'] = -msg.angular_velocity.z    #Imu topic
-    sc['angular_velocity_z'] = -msg.angular.z               #sc_pose topic
+    # print msg
+    sc['angular_velocity_z'] = -msg.twist.twist.angular.z               #sc_pose topic
 
 def setup_pid(control_rate, kp, ki, kd):
     pid = p.pid()
@@ -287,7 +289,7 @@ if __name__ == '__main__':
 
 
     rospy.Subscriber("vicon/" + sys.argv[1] + "/" + sys.argv[1] + "/", TransformStamped, get_position_and_yaw_angle_cb)
-    rospy.Subscriber("sc_pose", Odometry, get_angular_velocity)
+    rospy.Subscriber(sys.argv[1] + "_pose", Odometry, get_angular_velocity)
     # rospy.Subscriber(sys.argv[1] + "/Imu", Imu, get_angular_velocity)
     rospy.Subscriber(sys.argv[1] + "_short" + "/setpoint_x", Float32, get_setpoint_x)
     rospy.Subscriber(sys.argv[1] + "_short" + "/setpoint_y", Float32, get_setpoint_y)
@@ -371,6 +373,8 @@ if __name__ == '__main__':
         # if (abs(error_angular_velocity) < 0.1):
         #     moment_z_body = 0
 
+        # print("heading_current")
+        # print(heading_current)
         print("error_heading")
         print(error_heading)
 
@@ -394,6 +398,8 @@ if __name__ == '__main__':
         p_angular_velocity_current = Float32()
         p_angular_velocity_current.data = angular_velocity_current
 
+        print("angular_velocity", angular_velocity_current)
+
         p_heading_current = Float32()
         p_heading_current.data = heading_current
         pub_heading_current.publish(p_heading_current)
@@ -408,156 +414,156 @@ if __name__ == '__main__':
 
         ############ position controller
 
-        pos_x_current = sc['pos_I'][0]
-        pos_y_current = sc['pos_I'][1]
-        pos_x_setpt = sc['pos_I_setpt_x']
-        pos_y_setpt = sc['pos_I_setpt_y']
-
-
-        # acc_x_setpt, vel_x_setpt, pos_x_setpt = traj.ramp(x1=pos_x_start, x2=sc['pos_I_target'][0], a=ramp_acc, v=ramp_vel, t=t)
-        # acc_y_setpt, vel_y_setpt, pos_y_setpt = traj.ramp(x1=pos_y_start, x2=sc['pos_I_target'][1], a=ramp_acc, v=ramp_vel, t=t)
-        # t_ramp_end_x = traj.ramp_time(x1=pos_x_start, x2=sc['pos_I_target'][0], a=ramp_acc, v=ramp_vel)
-        # t_ramp_end_y = traj.ramp_time(x1=pos_y_start, x2=sc['pos_I_target'][1], a=ramp_acc, v=ramp_vel)
-
-        ## CONTROLLER of POSITION & VELOCITY in X
-        error_pos_x = pos_x_current - pos_x_setpt
-        velocity_x_setpt = pid_pos_x.pid_process(error_pos_x) #+ sc['vel_I_setpt_x']
-        # velocity_x_setpt = 0.0 # m/s
-        vel_x_current = get_velocity(pos_x_previous, pos_x_current, 1/control_rate)
-        error_vel_x = vel_x_current - velocity_x_setpt
-        force_x_inertial = pid_vel_x.pid_process(error_vel_x)
-        # if (abs(error_vel_x) < 0.01):
-        #     force_x_inertial = 0
-
-
-
-        ## CONTROLLER of POSITION & VELOCITY in Y
-        error_pos_y = pos_y_current - pos_y_setpt
-        velocity_y_setpt = pid_pos_y.pid_process(error_pos_y) #+ sc['vel_I_setpt_y']
-        # velocity_y_setpt = 0.0 # m/s
-        vel_y_current = get_velocity(pos_y_previous, pos_y_current, 1/control_rate)
-        error_vel_y = vel_y_current - velocity_y_setpt
-        force_y_inertial = pid_vel_y.pid_process(error_vel_y)
-        # if (abs(error_vel_y) < 0.01):
-        #     force_y_inertial = 0
-        trigger.data = flag_trajectory_is_followed
-        if (abs(error_pos_x) < 0.1 and abs(error_pos_y) < 0.1):
-            flag_trajectory_is_followed = 1
-
-
-        [force_x_body, force_y_body] = get_force_in_body_frame(force_x_inertial, force_y_inertial, sc['yaw_angle'])
-        thrusters = thruster_time_for_linear_impulse(force_x_body * control_period, 'X')
-        thrusters.update(thruster_time_for_linear_impulse(force_y_body * control_period, 'Y'))
-        linear_thruster_time_limit_ms = s_to_ms(linear_control_timeslice*0.80)
-        thrusters = limit_thruster_times(thrusters, linear_thruster_time_limit_ms)
-
-        thruster_values_ms_for_translation = Thrusters8()
-        thruster_values_ms_for_translation.FXpMZp = thrusters['FXpMZp']
-        thruster_values_ms_for_translation.FXpMZm = thrusters['FXpMZm']
-        thruster_values_ms_for_translation.FXmMZp = thrusters['FXmMZp']
-        thruster_values_ms_for_translation.FXmMZm = thrusters['FXmMZm']
-        thruster_values_ms_for_translation.FYpMZp = thrusters['FYpMZp']
-        thruster_values_ms_for_translation.FYpMZm = thrusters['FYpMZm']
-        thruster_values_ms_for_translation.FYmMZp = thrusters['FYmMZp']
-        thruster_values_ms_for_translation.FYmMZm = thrusters['FYmMZm']
-        # rospy.loginfo(thruster_values_ms_for_translation)
-        pub_thrusters.publish(thruster_values_ms_for_translation)
-
-        # gripper_state = Bool()
-        # if (t > t_ramp_end_x and t > t_ramp_end_y):
-        #     gripper_state.data = True
-        # else:
-        #     gripper_state.data = False
-        #     thruster_values_ms = Thrusters8()
-        #     thruster_values_ms.FXpMZp = 0
-        #     thruster_values_ms.FXpMZm = 0
-        #     thruster_values_ms.FXmMZp = 0
-        #     thruster_values_ms.FXmMZm = 0
-        #     thruster_values_ms.FYpMZp = 0
-        #     thruster_values_ms.FYpMZm = 0
-        #     thruster_values_ms.FYmMZp = 0
-        #     thruster_values_ms.FYmMZm = 0
-
-        # pub_gripper.publish(gripper_state)
-
-        ## debug output
-        p_x = Float32()
-        p_x.data = pos_x_current
-        p_vel_current_x = Float32()
-        p_vel_current_x.data = vel_x_current
-
-        p_y = Float32()
-        p_y.data = pos_y_current
-        p_vel_current_y = Float32()
-        p_vel_current_y.data = vel_y_current
-
-
-        pub_x.publish(p_x)
-        pub_y.publish(p_y)
-
-        pub_actual_velocity_x.publish(p_vel_current_x)
-        pub_actual_velocity_y.publish(p_vel_current_y)
-
-
-        pub_heading_setpoint_sc = Float32()
-        pub_heading_setpoint_sc.data = error_heading
-        pub_heading_setpoint.publish(error_heading)
-
-
-
-        error_x = Float32()
-        error_x.data = error_pos_x
-        pub_error_x.publish(error_x)
-
-        error_y = Float32()
-        error_y.data = error_pos_y
-        pub_error_y.publish(error_y)
-
-        error_vx = Float32()
-        error_vx.data = error_vel_x
-        pub_error_vx.publish(error_vx)
-
-        error_vy = Float32()
-        error_vy.data = error_vel_y
-        pub_error_vy.publish(error_vy)
-
-
-        data.writerow([
-            rospy.Time.now(),
-            pos_x_current,
-            pos_y_current,
-            pos_x_setpt,
-            pos_y_setpt,
-            vel_x_current,
-            vel_y_current,
-            velocity_x_setpt,
-            velocity_y_setpt,
-            heading_current,
-            heading_setpt,
-            thruster_values_ms_for_translation.FXpMZp,
-            thruster_values_ms_for_translation.FXpMZm,
-            thruster_values_ms_for_translation.FXmMZp,
-            thruster_values_ms_for_translation.FXmMZm,
-            thruster_values_ms_for_translation.FYpMZp,
-            thruster_values_ms_for_translation.FYpMZm,
-            thruster_values_ms_for_translation.FYmMZp,
-            thruster_values_ms_for_translation.FYmMZm,
-            thruster_values_ms_for_rotation.FXpMZp,
-            thruster_values_ms_for_rotation.FXpMZm,
-            thruster_values_ms_for_rotation.FXmMZp,
-            thruster_values_ms_for_rotation.FXmMZm,
-            thruster_values_ms_for_rotation.FYpMZp,
-            thruster_values_ms_for_rotation.FYpMZm,
-            thruster_values_ms_for_rotation.FYmMZp,
-            thruster_values_ms_for_rotation.FYmMZm,
-        ])
+        # pos_x_current = sc['pos_I'][0]
+        # pos_y_current = sc['pos_I'][1]
+        # pos_x_setpt = sc['pos_I_setpt_x']
+        # pos_y_setpt = sc['pos_I_setpt_y']
+        #
+        #
+        # # acc_x_setpt, vel_x_setpt, pos_x_setpt = traj.ramp(x1=pos_x_start, x2=sc['pos_I_target'][0], a=ramp_acc, v=ramp_vel, t=t)
+        # # acc_y_setpt, vel_y_setpt, pos_y_setpt = traj.ramp(x1=pos_y_start, x2=sc['pos_I_target'][1], a=ramp_acc, v=ramp_vel, t=t)
+        # # t_ramp_end_x = traj.ramp_time(x1=pos_x_start, x2=sc['pos_I_target'][0], a=ramp_acc, v=ramp_vel)
+        # # t_ramp_end_y = traj.ramp_time(x1=pos_y_start, x2=sc['pos_I_target'][1], a=ramp_acc, v=ramp_vel)
+        #
+        # ## CONTROLLER of POSITION & VELOCITY in X
+        # error_pos_x = pos_x_current - pos_x_setpt
+        # velocity_x_setpt = pid_pos_x.pid_process(error_pos_x) #+ sc['vel_I_setpt_x']
+        # # velocity_x_setpt = 0.0 # m/s
+        # vel_x_current = get_velocity(pos_x_previous, pos_x_current, 1/control_rate)
+        # error_vel_x = vel_x_current - velocity_x_setpt
+        # force_x_inertial = pid_vel_x.pid_process(error_vel_x)
+        # # if (abs(error_vel_x) < 0.01):
+        # #     force_x_inertial = 0
+        #
+        #
+        #
+        # ## CONTROLLER of POSITION & VELOCITY in Y
+        # error_pos_y = pos_y_current - pos_y_setpt
+        # velocity_y_setpt = pid_pos_y.pid_process(error_pos_y) #+ sc['vel_I_setpt_y']
+        # # velocity_y_setpt = 0.0 # m/s
+        # vel_y_current = get_velocity(pos_y_previous, pos_y_current, 1/control_rate)
+        # error_vel_y = vel_y_current - velocity_y_setpt
+        # force_y_inertial = pid_vel_y.pid_process(error_vel_y)
+        # # if (abs(error_vel_y) < 0.01):
+        # #     force_y_inertial = 0
+        # trigger.data = flag_trajectory_is_followed
+        # if (abs(error_pos_x) < 0.1 and abs(error_pos_y) < 0.1):
+        #     flag_trajectory_is_followed = 1
+        #
+        #
+        # [force_x_body, force_y_body] = get_force_in_body_frame(force_x_inertial, force_y_inertial, sc['yaw_angle'])
+        # thrusters = thruster_time_for_linear_impulse(force_x_body * control_period, 'X')
+        # thrusters.update(thruster_time_for_linear_impulse(force_y_body * control_period, 'Y'))
+        # linear_thruster_time_limit_ms = s_to_ms(linear_control_timeslice*0.80)
+        # thrusters = limit_thruster_times(thrusters, linear_thruster_time_limit_ms)
+        #
+        # thruster_values_ms_for_translation = Thrusters8()
+        # thruster_values_ms_for_translation.FXpMZp = thrusters['FXpMZp']
+        # thruster_values_ms_for_translation.FXpMZm = thrusters['FXpMZm']
+        # thruster_values_ms_for_translation.FXmMZp = thrusters['FXmMZp']
+        # thruster_values_ms_for_translation.FXmMZm = thrusters['FXmMZm']
+        # thruster_values_ms_for_translation.FYpMZp = thrusters['FYpMZp']
+        # thruster_values_ms_for_translation.FYpMZm = thrusters['FYpMZm']
+        # thruster_values_ms_for_translation.FYmMZp = thrusters['FYmMZp']
+        # thruster_values_ms_for_translation.FYmMZm = thrusters['FYmMZm']
+        # # rospy.loginfo(thruster_values_ms_for_translation)
+        # pub_thrusters.publish(thruster_values_ms_for_translation)
+        #
+        # # gripper_state = Bool()
+        # # if (t > t_ramp_end_x and t > t_ramp_end_y):
+        # #     gripper_state.data = True
+        # # else:
+        # #     gripper_state.data = False
+        # #     thruster_values_ms = Thrusters8()
+        # #     thruster_values_ms.FXpMZp = 0
+        # #     thruster_values_ms.FXpMZm = 0
+        # #     thruster_values_ms.FXmMZp = 0
+        # #     thruster_values_ms.FXmMZm = 0
+        # #     thruster_values_ms.FYpMZp = 0
+        # #     thruster_values_ms.FYpMZm = 0
+        # #     thruster_values_ms.FYmMZp = 0
+        # #     thruster_values_ms.FYmMZm = 0
+        #
+        # # pub_gripper.publish(gripper_state)
+        #
+        # ## debug output
+        # p_x = Float32()
+        # p_x.data = pos_x_current
+        # p_vel_current_x = Float32()
+        # p_vel_current_x.data = vel_x_current
+        #
+        # p_y = Float32()
+        # p_y.data = pos_y_current
+        # p_vel_current_y = Float32()
+        # p_vel_current_y.data = vel_y_current
+        #
+        #
+        # pub_x.publish(p_x)
+        # pub_y.publish(p_y)
+        #
+        # pub_actual_velocity_x.publish(p_vel_current_x)
+        # pub_actual_velocity_y.publish(p_vel_current_y)
+        #
+        #
+        # pub_heading_setpoint_sc = Float32()
+        # pub_heading_setpoint_sc.data = error_heading
+        # pub_heading_setpoint.publish(error_heading)
+        #
+        #
+        #
+        # error_x = Float32()
+        # error_x.data = error_pos_x
+        # pub_error_x.publish(error_x)
+        #
+        # error_y = Float32()
+        # error_y.data = error_pos_y
+        # pub_error_y.publish(error_y)
+        #
+        # error_vx = Float32()
+        # error_vx.data = error_vel_x
+        # pub_error_vx.publish(error_vx)
+        #
+        # error_vy = Float32()
+        # error_vy.data = error_vel_y
+        # pub_error_vy.publish(error_vy)
+        #
+        #
+        # data.writerow([
+        #     rospy.Time.now(),
+        #     pos_x_current,
+        #     pos_y_current,
+        #     pos_x_setpt,
+        #     pos_y_setpt,
+        #     vel_x_current,
+        #     vel_y_current,
+        #     velocity_x_setpt,
+        #     velocity_y_setpt,
+        #     heading_current,
+        #     heading_setpt,
+        #     thruster_values_ms_for_translation.FXpMZp,
+        #     thruster_values_ms_for_translation.FXpMZm,
+        #     thruster_values_ms_for_translation.FXmMZp,
+        #     thruster_values_ms_for_translation.FXmMZm,
+        #     thruster_values_ms_for_translation.FYpMZp,
+        #     thruster_values_ms_for_translation.FYpMZm,
+        #     thruster_values_ms_for_translation.FYmMZp,
+        #     thruster_values_ms_for_translation.FYmMZm,
+        #     thruster_values_ms_for_rotation.FXpMZp,
+        #     thruster_values_ms_for_rotation.FXpMZm,
+        #     thruster_values_ms_for_rotation.FXmMZp,
+        #     thruster_values_ms_for_rotation.FXmMZm,
+        #     thruster_values_ms_for_rotation.FYpMZp,
+        #     thruster_values_ms_for_rotation.FYpMZm,
+        #     thruster_values_ms_for_rotation.FYmMZp,
+        #     thruster_values_ms_for_rotation.FYmMZm,
+        # ])
 
         trigger_pub.publish(trigger)
 
         rate_spinner.sleep()
-
-        pos_x_previous = pos_x_current
-        pos_y_previous = pos_y_current
+        #
+        # pos_x_previous = pos_x_current
+        # pos_y_previous = pos_y_current
 
 
         t = t + 1/control_rate

@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # This script publishes the pose of a spacecraft simulator to a dummy Vicon
-# topic. This allows for the model's simulation environment ro utilize the same
-# framework to control the physical spacecraft.
+# topic. This allows for the model's simulation environment to work with the
+# same framework used to control the physical spacecraft.
 #
-# Maintainer: Jennifer Sun (jksun@caltech.edu)
+# Author: Jennifer Sun (jksun@caltech.edu)
 
 import rospy
+import sys
 from geometry_msgs.msg import TransformStamped
 from nav_msgs.msg import Odometry
 

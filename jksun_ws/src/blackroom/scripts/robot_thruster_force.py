@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # Program to publish messages from a csv file into Thruster8 messages to control
-# movement of the model.
+# movement of the model. This script is mostly used to test newly created
+# spacecraft simulator model descriptions.
+#
+# Author: Jennifer Sun (jksun@caltech.edu)
 
 import csv
 import os
@@ -12,19 +15,10 @@ from custom_msgs.msg import Thrusters8, Thrusters16
 
 def commands():
     if sys.argv[2] == '3DOF':
-        thrusters8_pub = rospy.Publisher('thruster8_force', Thrusters8, queue_size=1)
+        thrusters8_pub = rospy.Publisher('sc1/thruster8_force', Thrusters8, queue_size=1)
 
     if sys.argv[2] == '5DOF':
-        thrusters16_pub = rospy.Publisher('thruster16_force', Thrusters16, queue_size=1)
-
-    # FYmMZp_pub = rospy.Publisher('FYmMZp', Wrench, queue_size=1)    # 6 a
-    # FYmMZm_pub = rospy.Publisher('FYmMZm', Wrench, queue_size=1)    # 7 b
-    # FXmMZp_pub = rospy.Publisher('FXmMZp', Wrench, queue_size=1)    # 2 c
-    # FXmMZm_pub = rospy.Publisher('FXmMZm', Wrench, queue_size=1)    # 3 d
-    # FYpMZp_pub = rospy.Publisher('FYpMZp', Wrench, queue_size=1)    # 4 e
-    # FYpMZm_pub = rospy.Publisher('FYpMZm', Wrench, queue_size=1)    # 5 f
-    # FXpMZp_pub = rospy.Publisher('FXpMZp', Wrench, queue_size=1)    # 0 g
-    # FXpMZm_pub = rospy.Publisher('FXpMZm', Wrench, queue_size=1)    # 1 h
+        thrusters16_pub = rospy.Publisher('sc1/thruster16_force', Thrusters16, queue_size=1)
 
     rospy.init_node('sc_thrusters_force', log_level=rospy.INFO)
 

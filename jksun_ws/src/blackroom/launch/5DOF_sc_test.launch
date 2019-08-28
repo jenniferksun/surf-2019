@@ -1,12 +1,29 @@
 <launch>
+  <!-- Launches a test virtual environment with the current 5-DOF spacecraft
+    simulater model. This launch file is mainly used to test out any flaws in the
+    model.
+
+    Author: Jennifer Sun (jksun@caltech.edu) -->
+
+<!--===========================================================================
+ARGUMENTS (defaults can be changed here or by command line)
+============================================================================-->
+
   <arg name="world_name" default="$(find blackroom)/worlds/blackroom.world"/>
   <arg name="spacecraft_name" default="sc1"/>
+
+  <!-- Change format_type to 'sdf' to launch sdf format of 5-DOF sc model.
+  However, make sure to go to the spacecraft_simulator_description package
+  and uncomment the gazebo_plugin_path in lines 70-71 in the package.xml file
+  (spacecraft_simulator_description/package.xml). -->
+  <arg name="format_type" default="urdf"/>
 
   <arg name="paused" value="true"/>
   <arg name="verbose" value="true"/>
 
-  <!-- Load the spacecraft simulator URDF model into the parameter server -->
-  <param name="robot_description" textfile="$(find spacecraft_simulator_description)/urdf/5DOF_spacecraft_simulator.urdf" />
+<!--===========================================================================
+GAZEBO WORLD (launches empty world and loads in model world of ARCL blackroom)
+============================================================================-->
 
   <!-- Start Gazebo with an empty world -->
   <env name="GAZEBO_MODEL_PATH" value="$(find blackroom)/models"/>
@@ -18,7 +35,26 @@
     <!-- more default parameters can be changed here -->
   </include>
 
-  <node name="sc" pkg="gazebo_ros" type="spawn_model"
-        args="-param robot_description -urdf -x 0.0 -y 0.0 -z 0.01
-              -model sc"/>
+<!--===========================================================================
+SPACECRAFT SIMULATOR MODEL (launch urdf or sdf format of model)
+============================================================================-->
+
+  <group if="$(eval format_type == 'urdf')">
+    <!-- Load the spacecraft simulator URDF model into the parameter server -->
+    <param name="sc1_description"
+      command="$(find xacro)/xacro
+        '$(find spacecraft_simulator_description)/urdf/5DOF_spacecraft_simulator.urdf.xacro'
+        spacecraft_name:=sc1"/>
+
+    <node name="sc" pkg="gazebo_ros" type="spawn_model"
+      args="-param robot_description -urdf -x 0.0 -y 0.0 -z 0.01
+          -model sc"/>
+  </group>
+
+  <group if="$(eval format_type == 'sdf')">
+    <node name="sc" pkg="gazebo_ros" type="spawn_model"
+      args="-file $(find spacecraft_simulator_description)/urdf/5DOF_spacecraft_simulator.sdf
+        -sdf -x 0.0 -y 0.0 -z 0.01 -model sc"/>
+  </group>
+
 </launch>

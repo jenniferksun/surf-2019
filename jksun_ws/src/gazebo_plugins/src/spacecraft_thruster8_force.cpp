@@ -84,7 +84,7 @@ namespace gazebo {
     }
 
     // Logs that the SpacecraftThruster8Force plugin has been properly loaded in.
-    ROS_INFO("Loaded Spacecraft Thruster Force Plugin");
+    ROS_INFO("Loaded Spacecraft Thruster8 Force Plugin");
 
     this->rosnode_ = new ros::NodeHandle(this->robot_namespace_);
 

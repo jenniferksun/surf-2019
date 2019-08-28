@@ -9,7 +9,7 @@
 # actual spacecraft throught the thruster_to_model script. Uncomment VICON
 # portions of the following code to do so.
 #
-# Maintainer: Jennifer Sun (jksun@caltech.edu)
+# Author: Jennifer Sun (jksun@caltech.edu)
 
 import csv
 import math

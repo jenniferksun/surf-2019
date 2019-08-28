@@ -5,7 +5,7 @@
 # that publishes to a thruster_msg topic. Allows for the same framework to
 # control both the physical and modeled spacecraft simulators.
 #
-# Maintainer: Jennifer Sun (jksun@caltech.edu)
+# Author: Jennifer Sun (jksun@caltech.edu)
 
 import math
 import rospy
@@ -117,13 +117,14 @@ if __name__ == '__main__':
     rospy.init_node('sc_thruster_force', log_level=rospy.INFO)
 
     spacecraft_name = sys.argv[1]
-    rospy.Subscriber(spacecraft_name + '/thruster_msg', Thrusters8, callback)
 
     spacecraft_type = sys.argv[2]
     if spacecraft_type == '3DOF':
+        rospy.Subscriber(spacecraft_name + '/thruster_msg', Thrusters8, callback)
         thruster8_forces_pub = rospy.Publisher(spacecraft_name + '/thruster8_force', Thrusters8, queue_size=1)
 
     elif spacecraft_type == '5DOF':
+        rospy.Subscriber(spacecraft_name + '/thruster_msg', Thrusters16, callback)
         thruster16_forces_pub = rospy.Publisher(spacecraft_name + '/thruster16_force', Thrusters16, queue_size=1)
 
     # Gets the starting position of the spacecraft using Vicon from a bag file
