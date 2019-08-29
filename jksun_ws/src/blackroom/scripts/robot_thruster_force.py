@@ -27,7 +27,7 @@ def commands():
 
     path = open('/home/jksun/surf-2019/jksun_ws/src/blackroom/csv_files/' + sys.argv[1], 'r')
 
-    # rate at which Thrusters8 message gets published at (n times per second)
+    # rate at which Thruster messages gets published at (n times per second)
     rate = rospy.Rate(5)
 
     forces = csv.reader(path)

@@ -14,17 +14,12 @@ SPACECRAFT SIMULATOR MODEL (specifies urdf link properties for 3DOF sc model)
   <!-- Represents the spacecraft simulator model -->
   <link name="base_link">
     <inertial>
-      <!-- Mass and inertia according to solidworks model of full 3DOF sc -->
-      <!-- <mass value="9.08"/> -->
+      <!-- Mass according to rough measuring of the full 5DOF spacecraft -->
       <mass value="19.890"/>
       <!-- Sets up center of mass of link at the bottom of the ball joint -->
       <origin xyz="0 0 0.74522"/>
-      <!-- <inertia ixx="27.60" iyy="3.36" izz="28.06"
-               ixy="-5.21" ixz="0.86" iyz="-4.00"/> -->
-      <!-- From simplified 3DOF CAD -->
-      <!-- <inertia ixx="2.51" iyy="0.50" izz="2.60"
-               ixy="-0.55" ixz="0.16" iyz="-0.43"/> -->
-      <!-- From complete 5DOF CAD -->
+      <!-- Inertia according to solidworks model of the full 5DOF sc
+      upper stage -->
       <inertia ixx="4.09" iyy="0.68" izz="4.07"
                ixy="-0.11" ixz="0.03" iyz="-0.02"/>
     </inertial>

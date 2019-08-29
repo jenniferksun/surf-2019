@@ -147,6 +147,20 @@ OTHER SPACECRAFT SIMULATOR MODELS (can spawn multiple spacecrafts at once)
     <node name="sc3" pkg="gazebo_ros" type="spawn_model"
           args="-param sc3_description -urdf -x $(arg sc3_x) -y $(arg sc3_y)
             -z 0.01 -model sc3"/>
+
+    <group if="$(eval sim == 'yes')">
+      <node pkg="blackroom" type="simulation.py" name="sc3_model_to_vicon"
+        args="sc3"/>
+      <node pkg="blackroom" type="thruster_to_model.py"
+        name="thruster_to_sc3_model" args="sc3 $(arg spacecraft_type)
+          $(arg ctrl_freq)"/>
+
+      <group if="$(eval record == 'yes')">
+        <node pkg="blackroom" type="pose_plot.py" name="sc3_poses_to_csv"
+          args="$(find blackroom)/scripts/poses_to_csv_files/$(arg csv)
+            sc3"/>
+      </group>
+    </group>
   </group>
 
   <!-- Spawn spacecraft 4 (sc4) into Gazebo -->
@@ -158,6 +172,20 @@ OTHER SPACECRAFT SIMULATOR MODELS (can spawn multiple spacecrafts at once)
     <node name="sc4" pkg="gazebo_ros" type="spawn_model"
           args="-param sc4_description -urdf -x $(arg sc4_x) -y $(arg sc4_y)
             -z 0.01 -model sc4"/>
+
+    <group if="$(eval sim == 'yes')">
+      <node pkg="blackroom" type="simulation.py" name="sc4_model_to_vicon"
+        args="sc4"/>
+      <node pkg="blackroom" type="thruster_to_model.py"
+        name="thruster_to_sc4_model" args="sc4 $(arg spacecraft_type)
+          $(arg ctrl_freq)"/>
+
+      <group if="$(eval record == 'yes')">
+        <node pkg="blackroom" type="pose_plot.py" name="sc4_poses_to_csv"
+          args="$(find blackroom)/scripts/poses_to_csv_files/$(arg csv)
+            sc4"/>
+      </group>
+    </group>    `
   </group>
 
   <!-- Spawn spacecraft 5 (sc5) into Gazebo -->
@@ -169,6 +197,20 @@ OTHER SPACECRAFT SIMULATOR MODELS (can spawn multiple spacecrafts at once)
     <node name="sc5" pkg="gazebo_ros" type="spawn_model"
           args="-param sc5_description -urdf -x $(arg sc5_x) -y $(arg sc5_y)
             -z 0.01 -model sc5"/>
+
+    <group if="$(eval sim == 'yes')">
+      <node pkg="blackroom" type="simulation.py" name="sc5_model_to_vicon"
+        args="sc5"/>
+      <node pkg="blackroom" type="thruster_to_model.py"
+        name="thruster_to_sc5_model" args="sc5 $(arg spacecraft_type)
+          $(arg ctrl_freq)"/>
+
+      <group if="$(eval record == 'yes')">
+        <node pkg="blackroom" type="pose_plot.py" name="sc5_poses_to_csv"
+          args="$(find blackroom)/scripts/poses_to_csv_files/$(arg csv)
+            sc5"/>
+      </group>
+    </group>
   </group>
 
 
@@ -188,6 +230,20 @@ TEMPLATE FOR SPAWNING MORE SC MODELS (spawns 'sc?'; replace '?' with number)
     <node name="sc?" pkg="gazebo_ros" type="spawn_model"
           args="-param sc5_description -urdf -x $(arg sc?_x) -y $(arg sc?_y)
             -z 0.01 -model sc?"/>
+
+    <group if="$(eval sim == 'yes')">
+      <node pkg="blackroom" type="simulation.py" name="sc?_model_to_vicon"
+        args="sc?"/>
+      <node pkg="blackroom" type="thruster_to_model.py"
+        name="thruster_to_sc?_model" args="sc? $(arg spacecraft_type)
+          $(arg ctrl_freq)"/>
+
+      <group if="$(eval record == 'yes')">
+        <node pkg="blackroom" type="pose_plot.py" name="sc?_poses_to_csv"
+          args="$(find blackroom)/scripts/poses_to_csv_files/$(arg csv)
+            sc?"/>
+      </group>
+    </group>
   </group> -->
 
 </launch>
