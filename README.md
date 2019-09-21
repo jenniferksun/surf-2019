@@ -22,11 +22,10 @@ More information about the various ROS packages found within the catkin workspac
     the model’s pose, spawn multiple spacecrafts, and more. Additional arguments that 
     can be set can be found at jksun_ws/src/blackroom/launch/spacecraft_simulator.launch.
 
-      To simply spawn the virtual world, first build the ROS workspace and run the 
-      following line:
+      To simply spawn the virtual world, first build the ROS workspace and run the following line:
       roslaunch blackroom spacecraftsimulator.launch
 
-      To additionally start the simulation environment, instead run:
+      To additionally start the simulation environment, instead run the following line:
       roslaunch blackroom spacecraftsimulator.launch sim:=yes
 
 - custom_msgs
